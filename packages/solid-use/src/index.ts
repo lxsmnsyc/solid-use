@@ -23,3 +23,9 @@ export {
 export {
   default as usePageVisibility,
 } from './usePageVisibility';
+export {
+  default as usePrefersDark,
+} from './usePrefersDark';
+export {
+  default as usePrefersLight,
+} from './usePrefersLight';
