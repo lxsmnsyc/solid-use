@@ -17,3 +17,6 @@ export {
   Atom,
   default as atom,
 } from './atom';
+export {
+  default as usePageVisibility,
+} from './usePageVisibility';
