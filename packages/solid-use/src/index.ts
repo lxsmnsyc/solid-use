@@ -29,3 +29,6 @@ export {
 export {
   default as usePrefersLight,
 } from './usePrefersLight';
+export {
+  default as usePrefersReducedMotion,
+} from './usePrefersReducedMotion';
