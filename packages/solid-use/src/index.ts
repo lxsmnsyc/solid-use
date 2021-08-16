@@ -12,3 +12,7 @@ export {
 export {
   default as string,
 } from './string';
+export {
+  Atom,
+  default as atom,
+} from './atom';
