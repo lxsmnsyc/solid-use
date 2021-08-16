@@ -1,4 +1,4 @@
-import { onCleanup } from 'solid-js';
+import { Component, onCleanup } from 'solid-js';
 
 let PROVIDER: ProviderTree | undefined;
 
@@ -26,7 +26,7 @@ export function capturedProvider<T extends any[], R>(
   };
 }
 
-export function withProvider<T>(callback: () => T): T {
+export function providerScope<T>(callback: () => T): T {
   const parent = PROVIDER;
   PROVIDER = {
     parent,
@@ -74,4 +74,8 @@ export function inject<T>(context: Provider<T>): T {
     current = PROVIDER?.parent;
   }
   return context.defaultValue;
+}
+
+export function withProvider<T>(Comp: Component<T>): Component<T> {
+  return (props) => providerScope(() => Comp(props));
 }

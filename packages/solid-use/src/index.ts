@@ -8,6 +8,7 @@ export {
   inject,
   capturedProvider,
   createProvider,
+  providerScope,
 } from './provider';
 export {
   default as string,
