@@ -18,5 +18,8 @@ export {
   default as atom,
 } from './atom';
 export {
+  default as useMediaQuery,
+} from './useMediaQuery';
+export {
   default as usePageVisibility,
 } from './usePageVisibility';

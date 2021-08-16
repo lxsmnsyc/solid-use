@@ -1,7 +1,7 @@
 import { createEffect, createSignal, onCleanup } from 'solid-js';
 
 export default function usePageVisibility(): () => boolean {
-  if (document) {
+  if (document != null) {
     const [state, setState] = createSignal(document.visibilityState === 'visible');
 
     createEffect(() => {
