@@ -58,8 +58,6 @@ export function provide<T>(context: Provider<T>, value: T): void {
   if (parent) {
     parent.data[context.id] = { value };
 
-    // If provide is called in a linked work,
-    // make sure to delete the written data.
     onCleanup(() => {
       parent.data[context.id] = undefined;
     });
