@@ -9,3 +9,6 @@ export {
   capturedProvider,
   createProvider,
 } from './provider';
+export {
+  default as string,
+} from './string';
