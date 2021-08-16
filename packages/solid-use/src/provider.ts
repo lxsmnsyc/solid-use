@@ -1,14 +1,14 @@
 import { onCleanup } from 'solid-js';
 
-let PROVIDER: ContextTree | undefined;
+let PROVIDER: ProviderTree | undefined;
 
-interface ContextData<T> {
+interface ProviderData<T> {
   value: T;
 }
 
-interface ContextTree {
-  parent?: ContextTree;
-  data: Record<string, ContextData<any> | undefined>;
+interface ProviderTree {
+  parent?: ProviderTree;
+  data: Record<string, ProviderData<any> | undefined>;
 }
 
 export function capturedProvider<T extends any[], R>(
@@ -39,21 +39,21 @@ export function withProvider<T>(callback: () => T): T {
   }
 }
 
-export interface Context<T> {
+export interface Provider<T> {
   id: number;
   defaultValue: T;
 }
 
 let ID = 0;
 
-export function createProvider<T>(defaultValue: T): Context<T> {
+export function createProvider<T>(defaultValue: T): Provider<T> {
   return {
     id: ID++,
     defaultValue,
   };
 }
 
-export function provide<T>(context: Context<T>, value: T): void {
+export function provide<T>(context: Provider<T>, value: T): void {
   const parent = PROVIDER;
   if (parent) {
     parent.data[context.id] = { value };
@@ -66,7 +66,7 @@ export function provide<T>(context: Context<T>, value: T): void {
   }
 }
 
-export function inject<T>(context: Context<T>): T {
+export function inject<T>(context: Provider<T>): T {
   let current = PROVIDER;
   while (current) {
     const currentData = current.data[context.id];
