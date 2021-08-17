@@ -1,0 +1,18 @@
+{
+  "name": "provider-example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "babel-preset-solid": "^1.1.1",
+    "vite": "^2.4.4",
+    "vite-plugin-solid": "^2.0.1"
+  },
+  "dependencies": {
+    "solid-js": "^1.1.1",
+    "solid-use": "^0.1.0"
+  }
+}
