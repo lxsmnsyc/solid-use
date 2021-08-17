@@ -2,7 +2,7 @@
 
 > A collection of SolidJS utilities
 
-[![NPM](https://img.shields.io/npm/v/solid-use.svg)](https://www.npmjs.com/package/solid-use) [![JavaScript Style Guide](https://badgen.net/badge/code%20style/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript) [![Open in CodeSandbox](https://img.shields.io/badge/Open%20in-CodeSandbox-blue?style=flat-square&logo=codesandbox)](https://codesandbox.io/s/github/lxsmnsyc/solid-use/tree/main/examples/solid-use)
+[![NPM](https://img.shields.io/npm/v/solid-use.svg)](https://www.npmjs.com/package/solid-use) [![JavaScript Style Guide](https://badgen.net/badge/code%20style/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
 
 ## Install
 
