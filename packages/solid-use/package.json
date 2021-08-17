@@ -43,5 +43,19 @@
     "test": "pridepack test --passWithNoTests",
     "clean": "pridepack clean",
     "watch": "pridepack watch"
-  }
+  },
+  "description": "A collection of SolidJS utilities",
+  "repository": {
+    "url": "https://github.com/lxsmnsyc/solid-use.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/lxsmnsyc/solid-use/tree/main/packages/solid-use",
+  "bugs": {
+    "url": "https://github.com/lxsmnsyc/solid-use/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alexis Munsayac",
+  "private": false
 }
