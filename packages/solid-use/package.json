@@ -16,7 +16,10 @@
   },
   "license": "MIT",
   "keywords": [
-    "pridepack"
+    "pridepack",
+    "solid-js",
+    "use",
+    "hooks"
   ],
   "name": "solid-use",
   "devDependencies": {
