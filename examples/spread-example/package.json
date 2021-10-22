@@ -14,5 +14,6 @@
   "dependencies": {
     "solid-js": "^1.1.7",
     "solid-use": "0.1.0"
-  }
+  },
+  "private": true
 }
