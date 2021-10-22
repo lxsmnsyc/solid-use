@@ -7,12 +7,12 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "babel-preset-solid": "^1.1.1",
-    "vite": "^2.4.4",
-    "vite-plugin-solid": "^2.0.1"
+    "babel-preset-solid": "^1.1.7",
+    "vite": "^2.6.10",
+    "vite-plugin-solid": "^2.1.1"
   },
   "dependencies": {
-    "solid-js": "^1.1.1",
+    "solid-js": "^1.1.7",
     "solid-use": "^0.1.0"
   }
 }
