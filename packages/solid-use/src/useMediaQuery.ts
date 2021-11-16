@@ -13,7 +13,7 @@ function getMediaMatcher(query: string): MediaQueryList {
 }
 
 export default function useMediaQuery(query: string): () => boolean {
-  if (typeof window === undefined) {
+  if (typeof window === 'undefined') {
     return () => false;
   }
   const media = getMediaMatcher(query);

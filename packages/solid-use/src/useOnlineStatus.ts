@@ -1,7 +1,7 @@
 import { createSignal, createEffect, onCleanup } from 'solid-js';
 
 export default function useOnlineStatus(): () => boolean {
-  if (typeof navigator === undefined) {
+  if (typeof navigator === 'undefined') {
     return () => true;
   }
   const [state, setState] = createSignal(navigator.onLine);
