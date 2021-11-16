@@ -35,3 +35,7 @@ export {
 export {
   default as usePrefersReducedMotion,
 } from './usePrefersReducedMotion';
+export {
+  omitProps,
+  pickProps,
+} from './omit-props';

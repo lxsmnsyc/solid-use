@@ -1,4 +1,4 @@
-# solid-use
+# ![solid-use](https://github.com/LXSMNSYC/solid-use/raw/main/images/banner.png)
 
 > A collection of SolidJS utilities
 
@@ -125,6 +125,14 @@ createEffect(capturedProvider(() => {
 #### `withProvider`
 
 A higher-order component that internally wraps a component with a `providerScope`.
+
+### `omitProps` and `pickProps`
+
+Much similar to the built-in `splitProps`, `omitProps` removes selected keys while `pickProps` picks the selected keys from the source props
+
+```js
+<button {...excludeProps(props, ['ref', 'onClick'])} />
+```
 
 ### Others
 
