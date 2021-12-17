@@ -1,6 +1,6 @@
 {
   "name": "provider-example",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "solid-js": "^1.2.6",
-    "solid-use": "0.3.2"
+    "solid-use": "0.3.3"
   },
   "private": true
 }
