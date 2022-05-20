@@ -51,23 +51,22 @@
   ],
   "name": "solid-use",
   "devDependencies": {
-    "@types/node": "^17.0.0",
-    "eslint": "^7.32.0",
-    "eslint-config-lxsmnsyc": "^0.3.0",
-    "pridepack": "^1.0.3",
-    "solid-js": "^1.2.6",
-    "tslib": "^2.3.1",
-    "typescript": "^4.5.4"
+    "@types/node": "^17.0.35",
+    "eslint": "^8.15.0",
+    "eslint-config-lxsmnsyc": "^0.4.0",
+    "pridepack": "^1.1.1",
+    "solid-js": "^1.4.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
   },
   "peerDependencies": {
     "solid-js": "^1.2"
   },
   "scripts": {
-    "prepublish": "pridepack clean && pridepack build",
+    "prepublishOnly": "pridepack clean && pridepack build",
     "build": "pridepack build",
     "type-check": "pridepack check",
     "lint": "pridepack lint",
-    "test": "pridepack test --passWithNoTests",
     "clean": "pridepack clean",
     "watch": "pridepack watch"
   },
