@@ -138,10 +138,11 @@ export function waitForAny<S, F>(
   });
 }
 
-export function useClassicResource<T, F>(
-  resource: ClassicResource<T, F>,
+export function useClassicResource<T, F, Args extends any[] = []>(
+  resource: ClassicResource<T, F, Args>,
+  args: Args,
 ): T {
-  const result = resource.read();
+  const result = resource.read(...args);
 
   if (result.status === 'success') {
     return result.value;
