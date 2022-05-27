@@ -39,3 +39,12 @@ export {
   omitProps,
   pickProps,
 } from './omit-props';
+export {
+  createClassicResource,
+  createClassicSuspense,
+  ClassicResource,
+  ClassicResourceResult,
+  useClassicResource,
+  waitForAll,
+  waitForAny,
+} from './classic-suspense';

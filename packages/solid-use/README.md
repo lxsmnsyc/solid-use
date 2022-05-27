@@ -134,6 +134,69 @@ Much similar to the built-in `splitProps`, `omitProps` removes selected keys whi
 <button {...excludeProps(props, ['ref', 'onClick'])} />
 ```
 
+### Classic Suspense
+
+```js
+import {
+  createClassicResource,
+  createClassicSuspense,
+  useClassicResource,
+  waitForAll,
+} from 'solid-use';
+
+const sleep = (timeout) => new Promise((resolve) => {
+  setTimeout(resolve, timeout, true);
+})
+
+const greeting = createClassicResource(async () => {
+  await sleep(2000);
+  return 'Hello';
+});
+
+const receipient = createClassicResource(async () => {
+  await sleep(2000);
+  return 'SolidJS';
+});
+
+const result = waitForAll([
+  greeting,
+  receipient,
+]);
+
+function Message() {
+  return createClassicSuspense(() => {
+    const [greetingValue, receipientValue] = useClassicResource(result);
+
+    // const greetingValue = useClassicResource(greeting);
+    // const receipientValue = useClassicResource(receipient);
+
+    return <h1>{greetingValue}, {receipientValue}!</h1>
+  });
+}
+
+function App() {
+  return (
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <Message />
+    </Suspense>
+  );
+}
+```
+
+#### `createClassicSuspense`
+
+`createClassicSuspense` emulates the behavior of React's `<Suspense>` such that instead of reading from `createResource`, `createClassicSuspense` will suspend when a Promise is thrown. Unlike Solid's `createResource`, `createClassicSuspense` guarantees that the resource has already resolved by the time it reaches the resolving UI.
+
+`createClassicSuspense` wraps `createResource` so that it still works with Solid's Suspense.
+
+#### `createClassicResource` and `useClassicResource`
+
+A simple wrapper to Promises. `useClassicResource` will read from a given classic resource and will suspend if the resource is yet to resolve.
+
+#### `waitForAll` and `waitForAny`
+
+A utility for combining classic resources akin to `Promise.all` and `Promise.race`.
+
 ### Others
 
 - useMediaQuery
