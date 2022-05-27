@@ -26,20 +26,21 @@ export type ClassicResourceResult<T, F> =
   | ClassicResourceSuccess<T>
   | ClassicResourceFailure<F>;
 
-export interface ClassicResource<T, F> {
-  read: () => ClassicResourceResult<T, F>;
+export interface ClassicResource<T, F, Args extends any[] = []> {
+  read: (...args: Args) => ClassicResourceResult<T, F>;
+  clear: () => void;
 }
 
-export function createClassicResource<T, F>(
-  fetcher: () => Promise<T>,
-): ClassicResource<T, F> {
+export function createClassicResource<T, F, Args extends any[] = []>(
+  fetcher: (...args: Args) => Promise<T>,
+): ClassicResource<T, F, Args> {
   let result: ClassicResourceResult<T, F> | undefined;
 
   return {
-    read() {
+    read(...args) {
       if (result == null) {
         try {
-          const promise = fetcher();
+          const promise = fetcher(...args);
           promise.then(
             (value) => {
               result = {
@@ -67,6 +68,9 @@ export function createClassicResource<T, F>(
         }
       }
       return result;
+    },
+    clear() {
+      result = undefined;
     },
   };
 }
