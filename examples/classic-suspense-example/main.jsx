@@ -31,9 +31,6 @@ function Message() {
   return createClassicSuspense(() => {
     const [greetingValue, receipientValue] = useClassicResource(result);
 
-    // const greetingValue = useClassicResource(greeting);
-    // const receipientValue = useClassicResource(receipient);
-
     return <h1>{greetingValue}, {receipientValue}!</h1>
   });
 }
