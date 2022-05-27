@@ -38,26 +38,33 @@ export function createClassicResource<T, F>(
   return {
     read() {
       if (result == null) {
-        const promise = fetcher();
-        promise.then(
-          (value) => {
-            result = {
-              status: 'success',
-              value,
-            };
-            return value;
-          },
-          (value: F) => {
-            result = {
-              status: 'failure',
-              value,
-            };
-          },
-        );
-        result = {
-          status: 'pending',
-          value: promise,
-        };
+        try {
+          const promise = fetcher();
+          promise.then(
+            (value) => {
+              result = {
+                status: 'success',
+                value,
+              };
+              return value;
+            },
+            (value: F) => {
+              result = {
+                status: 'failure',
+                value,
+              };
+            },
+          );
+          result = {
+            status: 'pending',
+            value: promise,
+          };
+        } catch (error) {
+          result = {
+            status: 'failure',
+            value: error as F,
+          };
+        }
       }
       return result;
     },
