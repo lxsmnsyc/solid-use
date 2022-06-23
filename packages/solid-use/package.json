@@ -52,12 +52,12 @@
   "name": "solid-use",
   "devDependencies": {
     "@types/node": "^17.0.35",
-    "eslint": "^8.15.0",
-    "eslint-config-lxsmnsyc": "^0.4.0",
+    "eslint": "^8.18.0",
+    "eslint-config-lxsmnsyc": "^0.4.1",
     "pridepack": "^1.1.1",
-    "solid-js": "^1.4.2",
+    "solid-js": "^1.4.4",
     "tslib": "^2.4.0",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
     "solid-js": "^1.2"
