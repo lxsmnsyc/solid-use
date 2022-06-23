@@ -13,6 +13,7 @@ export function omitProps<T extends Record<string, any>, K extends keyof T>(
         get() {
           return value[key];
         },
+        configurable: true,
         enumerable: true,
       });
     }
@@ -36,6 +37,7 @@ export function pickProps<T extends Record<string, any>, K extends keyof T>(
         get() {
           return value[key];
         },
+        configurable: true,
         enumerable: true,
       });
     }
