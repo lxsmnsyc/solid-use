@@ -16,6 +16,7 @@ module.exports = {
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-return": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "max-classes-per-file": "off"
   }
 };

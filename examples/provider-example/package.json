@@ -7,9 +7,9 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "babel-preset-solid": "^1.2.6",
-    "vite": "^2.7.3",
-    "vite-plugin-solid": "^2.1.4"
+    "babel-preset-solid": "^1.4.4",
+    "vite": "^2.9.12",
+    "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
     "solid-js": "^1.4.2",

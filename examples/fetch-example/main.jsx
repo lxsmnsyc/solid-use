@@ -5,7 +5,7 @@ import {
 } from 'solid-use';
 
 function SuspensefulDogImage() {
-  const result = fetch('https://dog.ceo/api/breed/shiba/images/random', undefined, true).json();
+  const result = fetch('https://dog.ceo/api/breed/shiba/images/random', {}, true).json();
 
   return (
     <Show when={result()}>
