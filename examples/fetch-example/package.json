@@ -1,0 +1,19 @@
+{
+  "name": "fetch-example",
+  "version": "0.4.3",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "babel-preset-solid": "^1.4.4",
+    "vite": "^2.9.12",
+    "vite-plugin-solid": "^2.2.6"
+  },
+  "dependencies": {
+    "solid-js": "^1.4.2",
+    "solid-use": "0.4.3"
+  },
+  "private": true
+}
