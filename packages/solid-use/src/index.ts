@@ -44,7 +44,21 @@ export {
   createClassicSuspense,
   ClassicResource,
   ClassicResourceResult,
+  ClassicResourceFailure,
+  ClassicResourcePending,
+  ClassicResourceSuccess,
   useClassicResource,
   waitForAll,
   waitForAny,
+  useResourceResult,
 } from './classic-suspense';
+export {
+  FetchFailure,
+  FetchPending,
+  FetchResult,
+  FetchSuccess,
+  SuspensefulFetchResponse,
+  SuspenselessFetchResponse,
+  ClassicSuspenseFetchResponse,
+  default as fetch,
+} from './fetch';

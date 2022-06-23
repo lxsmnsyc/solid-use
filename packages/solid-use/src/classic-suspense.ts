@@ -6,17 +6,17 @@ import {
   createResource,
 } from 'solid-js';
 
-interface ClassicResourcePending<T> {
+export interface ClassicResourcePending<T> {
   status: 'pending';
   value: Promise<T>;
 }
 
-interface ClassicResourceSuccess<T> {
+export interface ClassicResourceSuccess<T> {
   status: 'success';
   value: T;
 }
 
-interface ClassicResourceFailure<F> {
+export interface ClassicResourceFailure<F> {
   status: 'failure';
   value: F;
 }
@@ -138,14 +138,16 @@ export function waitForAny<S, F>(
   });
 }
 
-export function useClassicResource<T, F, Args extends any[] = []>(
-  resource: ClassicResource<T, F, Args>,
-  args: Args,
-): T {
-  const result = resource.read(...args);
-
+export function useResourceResult<T, F>(result: ClassicResourceResult<T, F>) {
   if (result.status === 'success') {
     return result.value;
   }
   throw result.value;
+}
+
+export function useClassicResource<T, F, Args extends any[] = []>(
+  resource: ClassicResource<T, F, Args>,
+  args: Args,
+): T {
+  return useResourceResult(resource.read(...args));
 }
