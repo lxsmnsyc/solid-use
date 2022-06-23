@@ -197,6 +197,64 @@ A simple wrapper to Promises. `useClassicResource` will read from a given classi
 
 A utility for combining classic resources akin to `Promise.all` and `Promise.race`.
 
+#### `useResourceResult`
+
+Similar to `useClassicResource`, useful for custom resource signal implementations.
+
+### Fetch
+
+```js
+import { fetch } from 'solid-use';
+
+function SuspensefulDogImage() {
+  const result = fetch('https://dog.ceo/api/breed/shiba/images/random', undefined, true).json();
+
+  return <img src={result().message} alt={result().message} />;
+}
+
+function SuspenselessDogImage() {
+  const result = fetch('https://dog.ceo/api/breed/shiba/images/random', undefined, false).json();
+
+  return (
+    <Switch>
+      <Match when={result.status === 'pending'}>
+        <h1>Loading...</h1>
+      </Match>
+      <Match when={result.status === 'failure'}>
+        <h1>Something went wrong</h1>
+      </Match>
+      <Match when={result.status === 'success'}>
+        <img src={result.value.message} alt={result().value.message} />
+      </Match>
+    </Switch>
+  );
+}
+
+
+function ClassicSuspenseDogImage() {
+  const result = fetch('https://dog.ceo/api/breed/shiba/images/random', undefined, 'classic').json();
+
+  return createClassicSuspense(() => {
+    const data = useResourceResult(result());
+
+    return <img src={data.message} alt={data.message} />;
+  });
+}
+
+```
+
+Provides a similar API to the Fetch API, `solid-use`' `fetch` uses resource and signals to provide a reactive way of fetching.
+
+The parameters of `fetch` can be wrapped into a function for reactive sources and options.
+
+```js
+function SuspensefulDogImage() {
+  const result = fetch(() => `https://dog.ceo/api/breed/${breed()}/images/random`, () => ({ mode: mode() }), true).json();
+
+  return <img src={result().message} alt={result().message} />;
+}
+```
+
 ### Others
 
 - useMediaQuery
