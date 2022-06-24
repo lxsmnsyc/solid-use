@@ -224,7 +224,7 @@ function SuspenselessDogImage() {
         <h1>Something went wrong</h1>
       </Match>
       <Match when={result.status === 'success'}>
-        <img src={result.value.message} alt={result().value.message} />
+        <img src={result.value.message} alt={result.value.message} />
       </Match>
     </Switch>
   );
