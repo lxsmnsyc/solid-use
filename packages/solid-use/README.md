@@ -131,7 +131,7 @@ A higher-order component that internally wraps a component with a `providerScope
 Much similar to the built-in `splitProps`, `omitProps` removes selected keys while `pickProps` picks the selected keys from the source props
 
 ```js
-<button {...excludeProps(props, ['ref', 'onClick'])} />
+<button {...omitProps(props, ['ref', 'onClick'])} />
 ```
 
 ### Classic Suspense
