@@ -71,7 +71,7 @@ export function inject<T>(context: Provider<T>): T {
     if (currentData) {
       return currentData.value;
     }
-    current = PROVIDER?.parent;
+    current = current.parent;
   }
   return context.defaultValue;
 }

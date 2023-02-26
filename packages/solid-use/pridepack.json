@@ -1,3 +1,14 @@
 {
-  "target": "es2017"
+  "target": "es2018",
+  "entrypoints": {
+    "./atom": "src/atom.ts",
+    "./props": "src/props.ts",
+    "./provider": "src/provider.ts",
+    "./string": "src/string.ts",
+    "./media-query": "src/media-query.ts",
+    "./online-status": "src/online-status.ts",
+    "./page-visibility": "src/page-visibility.ts",
+    "./fetch": "src/fetch.ts",
+    "./classic-suspense": "src/classic-suspense.ts"
+  }
 }

@@ -151,3 +151,120 @@ export function useClassicResource<T, F, Args extends any[] = []>(
 ): T {
   return useResourceResult(resource.read(...args));
 }
+
+const nativeFetch = globalThis.fetch;
+
+type Signalify<T> = T | (() => T);
+
+function isSignal<T>(value: Signalify<T>): value is () => T {
+  return typeof value === 'function';
+}
+
+function fromSignal<T>(value: Signalify<T>): T {
+  if (isSignal(value)) {
+    return value();
+  }
+  return value;
+}
+
+type FetchParameters = [RequestInfo | URL, RequestInit | undefined];
+
+export class ClassicSuspenseFetchResponse {
+  private input: Signalify<RequestInfo | URL>;
+
+  private init?: Signalify<RequestInit | undefined>;
+
+  constructor(
+    input: Signalify<RequestInfo | URL>,
+    init?: Signalify<RequestInit | undefined>,
+  ) {
+    this.input = input;
+    this.init = init;
+  }
+
+  private readInputs() {
+    return createMemo((): FetchParameters => [
+      fromSignal(this.input),
+      fromSignal(this.init),
+    ], undefined, {
+      equals: (a, b) => a[0] !== b[0] && a[1] !== b[1],
+    });
+  }
+
+  arrayBuffer(): () => ClassicResourceResult<ArrayBuffer, any> {
+    const resource = createClassicResource(async (
+      input: RequestInfo | URL,
+      init: RequestInit | undefined,
+    ) => {
+      const response = await nativeFetch(input, init);
+      return response.arrayBuffer();
+    });
+
+    const args = this.readInputs();
+
+    return () => resource.read(...args());
+  }
+
+  blob(): () => ClassicResourceResult<Blob, any> {
+    const resource = createClassicResource(async (
+      input: RequestInfo | URL,
+      init: RequestInit | undefined,
+    ) => {
+      const response = await nativeFetch(input, init);
+      return response.blob();
+    });
+
+    const args = this.readInputs();
+
+    return () => resource.read(...args());
+  }
+
+  formData(): () => ClassicResourceResult<FormData, any> {
+    const resource = createClassicResource(async (
+      input: RequestInfo | URL,
+      init: RequestInit | undefined,
+    ) => {
+      const response = await nativeFetch(input, init);
+      return response.formData();
+    });
+
+    const args = this.readInputs();
+
+    return () => resource.read(...args());
+  }
+
+  json<T>(): () => ClassicResourceResult<T, any> {
+    const resource = createClassicResource(async (
+      input: RequestInfo | URL,
+      init: RequestInit | undefined,
+    ) => {
+      const response = await nativeFetch(input, init);
+      return response.json();
+    });
+
+    const args = this.readInputs();
+
+    return () => resource.read(...args());
+  }
+
+  text(): () => ClassicResourceResult<string, any> {
+    const resource = createClassicResource(async (
+      input: RequestInfo | URL,
+      init: RequestInit | undefined,
+    ) => {
+      const response = await nativeFetch(input, init);
+      return response.text();
+    });
+
+    const args = this.readInputs();
+
+    return () => resource.read(...args());
+  }
+}
+
+export function fetch(
+  input: Signalify<RequestInfo | URL>,
+  init?: Signalify<RequestInit | undefined>,
+): ClassicSuspenseFetchResponse {
+  return new ClassicSuspenseFetchResponse(input, init);
+}

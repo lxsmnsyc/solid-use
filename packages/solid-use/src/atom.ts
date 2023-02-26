@@ -1,12 +1,11 @@
 import { createSignal } from 'solid-js';
-import { is } from './utils';
 
 export interface Atom<T> {
   (): T;
   (value: T): T;
 }
 
-export default function atom<T>(value: T, equals = is): Atom<T> {
+export default function atom<T>(value: T, equals = Object.is): Atom<T> {
   const [state, setState] = createSignal(value, {
     equals,
   });

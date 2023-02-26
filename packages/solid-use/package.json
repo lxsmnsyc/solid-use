@@ -1,18 +1,87 @@
 {
   "version": "0.6.2",
   "type": "module",
-  "types": "./dist/types/index.d.ts",
-  "main": "./dist/cjs/production/index.cjs",
-  "module": "./dist/esm/production/index.mjs",
   "exports": {
-    ".": {
+    "./atom": {
       "development": {
-        "require": "./dist/cjs/development/index.cjs",
-        "import": "./dist/esm/development/index.mjs"
+        "require": "./dist/cjs/development/atom.cjs",
+        "import": "./dist/esm/development/atom.mjs"
       },
-      "require": "./dist/cjs/production/index.cjs",
-      "import": "./dist/esm/production/index.mjs",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/production/atom.cjs",
+      "import": "./dist/esm/production/atom.mjs",
+      "types": "./dist/types/atom.d.ts"
+    },
+    "./props": {
+      "development": {
+        "require": "./dist/cjs/development/props.cjs",
+        "import": "./dist/esm/development/props.mjs"
+      },
+      "require": "./dist/cjs/production/props.cjs",
+      "import": "./dist/esm/production/props.mjs",
+      "types": "./dist/types/props.d.ts"
+    },
+    "./provider": {
+      "development": {
+        "require": "./dist/cjs/development/provider.cjs",
+        "import": "./dist/esm/development/provider.mjs"
+      },
+      "require": "./dist/cjs/production/provider.cjs",
+      "import": "./dist/esm/production/provider.mjs",
+      "types": "./dist/types/provider.d.ts"
+    },
+    "./string": {
+      "development": {
+        "require": "./dist/cjs/development/string.cjs",
+        "import": "./dist/esm/development/string.mjs"
+      },
+      "require": "./dist/cjs/production/string.cjs",
+      "import": "./dist/esm/production/string.mjs",
+      "types": "./dist/types/string.d.ts"
+    },
+    "./media-query": {
+      "development": {
+        "require": "./dist/cjs/development/media-query.cjs",
+        "import": "./dist/esm/development/media-query.mjs"
+      },
+      "require": "./dist/cjs/production/media-query.cjs",
+      "import": "./dist/esm/production/media-query.mjs",
+      "types": "./dist/types/media-query.d.ts"
+    },
+    "./online-status": {
+      "development": {
+        "require": "./dist/cjs/development/online-status.cjs",
+        "import": "./dist/esm/development/online-status.mjs"
+      },
+      "require": "./dist/cjs/production/online-status.cjs",
+      "import": "./dist/esm/production/online-status.mjs",
+      "types": "./dist/types/online-status.d.ts"
+    },
+    "./page-visibility": {
+      "development": {
+        "require": "./dist/cjs/development/page-visibility.cjs",
+        "import": "./dist/esm/development/page-visibility.mjs"
+      },
+      "require": "./dist/cjs/production/page-visibility.cjs",
+      "import": "./dist/esm/production/page-visibility.mjs",
+      "types": "./dist/types/page-visibility.d.ts"
+    },
+    "./fetch": {
+      "development": {
+        "require": "./dist/cjs/development/fetch.cjs",
+        "import": "./dist/esm/development/fetch.mjs"
+      },
+      "require": "./dist/cjs/production/fetch.cjs",
+      "import": "./dist/esm/production/fetch.mjs",
+      "types": "./dist/types/fetch.d.ts"
+    },
+    "./classic-suspense": {
+      "development": {
+        "require": "./dist/cjs/development/classic-suspense.cjs",
+        "import": "./dist/esm/development/classic-suspense.mjs"
+      },
+      "require": "./dist/cjs/production/classic-suspense.cjs",
+      "import": "./dist/esm/production/classic-suspense.mjs",
+      "types": "./dist/types/classic-suspense.d.ts"
     }
   },
   "files": [
@@ -65,6 +134,34 @@
   "author": "Alexis Munsayac",
   "private": false,
   "typesVersions": {
-    "*": {}
+    "*": {
+      "atom": [
+        "./dist/types/atom.d.ts"
+      ],
+      "props": [
+        "./dist/types/props.d.ts"
+      ],
+      "provider": [
+        "./dist/types/provider.d.ts"
+      ],
+      "string": [
+        "./dist/types/string.d.ts"
+      ],
+      "media-query": [
+        "./dist/types/media-query.d.ts"
+      ],
+      "online-status": [
+        "./dist/types/online-status.d.ts"
+      ],
+      "page-visibility": [
+        "./dist/types/page-visibility.d.ts"
+      ],
+      "fetch": [
+        "./dist/types/fetch.d.ts"
+      ],
+      "classic-suspense": [
+        "./dist/types/classic-suspense.d.ts"
+      ]
+    }
   }
 }
