@@ -1,8 +1,6 @@
 import { Suspense } from 'solid-js';
 import { render } from 'solid-js/web';
-import {
-  fetch,
-} from 'solid-use';
+import fetch from 'solid-use/fetch';
 
 function SuspensefulDogImage() {
   const result = fetch('https://dog.ceo/api/breed/shiba/images/random', {}, true).json();

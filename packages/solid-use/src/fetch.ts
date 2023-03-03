@@ -1,15 +1,10 @@
 // eslint-disable-next-line max-classes-per-file
 import {
   createEffect,
-  createMemo,
   createResource,
   createSignal,
   Resource,
 } from 'solid-js';
-import {
-  ClassicResourceResult,
-  createClassicResource,
-} from './classic-suspense';
 
 const nativeFetch = globalThis.fetch;
 
@@ -233,99 +228,6 @@ export class SuspenselessFetchResponse {
   }
 }
 
-export class ClassicSuspenseFetchResponse {
-  private input: Signalify<RequestInfo | URL>;
-
-  private init?: Signalify<RequestInit | undefined>;
-
-  constructor(
-    input: Signalify<RequestInfo | URL>,
-    init?: Signalify<RequestInit | undefined>,
-  ) {
-    this.input = input;
-    this.init = init;
-  }
-
-  private readInputs() {
-    return createMemo((): FetchParameters => [
-      fromSignal(this.input),
-      fromSignal(this.init),
-    ], undefined, {
-      equals: (a, b) => a[0] !== b[0] && a[1] !== b[1],
-    });
-  }
-
-  arrayBuffer(): () => ClassicResourceResult<ArrayBuffer, any> {
-    const resource = createClassicResource(async (
-      input: RequestInfo | URL,
-      init: RequestInit | undefined,
-    ) => {
-      const response = await nativeFetch(input, init);
-      return response.arrayBuffer();
-    });
-
-    const args = this.readInputs();
-
-    return () => resource.read(...args());
-  }
-
-  blob(): () => ClassicResourceResult<Blob, any> {
-    const resource = createClassicResource(async (
-      input: RequestInfo | URL,
-      init: RequestInit | undefined,
-    ) => {
-      const response = await nativeFetch(input, init);
-      return response.blob();
-    });
-
-    const args = this.readInputs();
-
-    return () => resource.read(...args());
-  }
-
-  formData(): () => ClassicResourceResult<FormData, any> {
-    const resource = createClassicResource(async (
-      input: RequestInfo | URL,
-      init: RequestInit | undefined,
-    ) => {
-      const response = await nativeFetch(input, init);
-      return response.formData();
-    });
-
-    const args = this.readInputs();
-
-    return () => resource.read(...args());
-  }
-
-  json<T>(): () => ClassicResourceResult<T, any> {
-    const resource = createClassicResource(async (
-      input: RequestInfo | URL,
-      init: RequestInit | undefined,
-    ) => {
-      const response = await nativeFetch(input, init);
-      return response.json();
-    });
-
-    const args = this.readInputs();
-
-    return () => resource.read(...args());
-  }
-
-  text(): () => ClassicResourceResult<string, any> {
-    const resource = createClassicResource(async (
-      input: RequestInfo | URL,
-      init: RequestInit | undefined,
-    ) => {
-      const response = await nativeFetch(input, init);
-      return response.text();
-    });
-
-    const args = this.readInputs();
-
-    return () => resource.read(...args());
-  }
-}
-
 function fetch(
   input: Signalify<RequestInfo | URL>,
   init?: Signalify<RequestInit | undefined>,
@@ -339,16 +241,8 @@ function fetch(
 function fetch(
   input: Signalify<RequestInfo | URL>,
   init?: Signalify<RequestInit | undefined>,
-  suspense?: 'classic',
-): ClassicSuspenseFetchResponse;
-function fetch(
-  input: Signalify<RequestInfo | URL>,
-  init?: Signalify<RequestInit | undefined>,
-  suspense?: boolean | 'classic',
-): SuspenselessFetchResponse | SuspensefulFetchResponse | ClassicSuspenseFetchResponse {
-  if (suspense === 'classic') {
-    return new ClassicSuspenseFetchResponse(input, init);
-  }
+  suspense?: boolean,
+): SuspenselessFetchResponse | SuspensefulFetchResponse {
   if (suspense) {
     return new SuspensefulFetchResponse(input, init);
   }

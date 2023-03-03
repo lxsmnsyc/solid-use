@@ -1,4 +1,5 @@
 import { createEffect, createSignal, onCleanup } from 'solid-js';
+import { isServer } from 'solid-js/web';
 
 const MEDIA = new Map<string, MediaQueryList>();
 
@@ -12,17 +13,18 @@ function getMediaMatcher(query: string): MediaQueryList {
   return newMedia;
 }
 
-export default function useMediaQuery(query: string): () => boolean {
-  if (typeof window === 'undefined') {
+export function useMediaQuery(query: string): () => boolean {
+  if (isServer) {
     return () => false;
   }
   const media = getMediaMatcher(query);
-  const [state, setState] = createSignal(media.matches);
+  const [state, setState] = createSignal(false);
 
   createEffect(() => {
     const callback = () => {
       setState(media.matches);
     };
+    callback();
     media.addEventListener('change', callback, false);
     onCleanup(() => {
       media.removeEventListener('change', callback, false);
@@ -31,3 +33,16 @@ export default function useMediaQuery(query: string): () => boolean {
 
   return state;
 }
+
+export function usePrefersDark(): () => boolean {
+  return useMediaQuery('(prefers-color-scheme: dark)');
+}
+
+export function usePrefersLight(): () => boolean {
+  return useMediaQuery('(prefers-color-scheme: light)');
+}
+
+export function usePrefersReducedMotion(): () => boolean {
+  return useMediaQuery('(prefers-reduced-motion)');
+}
+

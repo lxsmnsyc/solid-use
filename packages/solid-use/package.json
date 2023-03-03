@@ -1,38 +1,87 @@
 {
-  "version": "0.5.0",
-  "types": "dist/types/index.d.ts",
-  "main": "dist/cjs/production/index.js",
-  "module": "dist/esm/production/index.js",
+  "version": "0.7.0",
+  "type": "module",
   "exports": {
-    ".": {
+    "./atom": {
       "development": {
-        "require": "./dist/cjs/development/index.js",
-        "import": "./dist/esm/development/index.js"
+        "require": "./dist/cjs/development/atom.cjs",
+        "import": "./dist/esm/development/atom.mjs"
       },
-      "require": "./dist/cjs/production/index.js",
-      "import": "./dist/esm/production/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/production/atom.cjs",
+      "import": "./dist/esm/production/atom.mjs",
+      "types": "./dist/types/atom.d.ts"
     },
-    "./dev": {
-      "production": {
-        "require": "./dist/cjs/production/index.js",
-        "import": "./dist/esm/production/index.js"
+    "./props": {
+      "development": {
+        "require": "./dist/cjs/development/props.cjs",
+        "import": "./dist/esm/development/props.mjs"
       },
-      "require": "./dist/cjs/development/index.js",
-      "import": "./dist/esm/development/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/cjs/production/props.cjs",
+      "import": "./dist/esm/production/props.mjs",
+      "types": "./dist/types/props.d.ts"
     },
-    "./esm": {
-      "development": "./dist/esm/development/index.js",
-      "production": "./dist/esm/production/index.js",
-      "default": "./dist/esm/production/index.js",
-      "types": "./dist/types/index.d.ts"
+    "./provider": {
+      "development": {
+        "require": "./dist/cjs/development/provider.cjs",
+        "import": "./dist/esm/development/provider.mjs"
+      },
+      "require": "./dist/cjs/production/provider.cjs",
+      "import": "./dist/esm/production/provider.mjs",
+      "types": "./dist/types/provider.d.ts"
     },
-    "./cjs": {
-      "development": "./dist/cjs/development/index.js",
-      "production": "./dist/cjs/production/index.js",
-      "default": "./dist/cjs/production/index.js",
-      "types": "./dist/types/index.d.ts"
+    "./string": {
+      "development": {
+        "require": "./dist/cjs/development/string.cjs",
+        "import": "./dist/esm/development/string.mjs"
+      },
+      "require": "./dist/cjs/production/string.cjs",
+      "import": "./dist/esm/production/string.mjs",
+      "types": "./dist/types/string.d.ts"
+    },
+    "./media-query": {
+      "development": {
+        "require": "./dist/cjs/development/media-query.cjs",
+        "import": "./dist/esm/development/media-query.mjs"
+      },
+      "require": "./dist/cjs/production/media-query.cjs",
+      "import": "./dist/esm/production/media-query.mjs",
+      "types": "./dist/types/media-query.d.ts"
+    },
+    "./online-status": {
+      "development": {
+        "require": "./dist/cjs/development/online-status.cjs",
+        "import": "./dist/esm/development/online-status.mjs"
+      },
+      "require": "./dist/cjs/production/online-status.cjs",
+      "import": "./dist/esm/production/online-status.mjs",
+      "types": "./dist/types/online-status.d.ts"
+    },
+    "./page-visibility": {
+      "development": {
+        "require": "./dist/cjs/development/page-visibility.cjs",
+        "import": "./dist/esm/development/page-visibility.mjs"
+      },
+      "require": "./dist/cjs/production/page-visibility.cjs",
+      "import": "./dist/esm/production/page-visibility.mjs",
+      "types": "./dist/types/page-visibility.d.ts"
+    },
+    "./fetch": {
+      "development": {
+        "require": "./dist/cjs/development/fetch.cjs",
+        "import": "./dist/esm/development/fetch.mjs"
+      },
+      "require": "./dist/cjs/production/fetch.cjs",
+      "import": "./dist/esm/production/fetch.mjs",
+      "types": "./dist/types/fetch.d.ts"
+    },
+    "./server-value": {
+      "development": {
+        "require": "./dist/cjs/development/server-value.cjs",
+        "import": "./dist/esm/development/server-value.mjs"
+      },
+      "require": "./dist/cjs/production/server-value.cjs",
+      "import": "./dist/esm/production/server-value.mjs",
+      "types": "./dist/types/server-value.d.ts"
     }
   },
   "files": [
@@ -51,16 +100,23 @@
   ],
   "name": "solid-use",
   "devDependencies": {
-    "@types/node": "^17.0.35",
-    "eslint": "^8.18.0",
-    "eslint-config-lxsmnsyc": "^0.4.1",
-    "pridepack": "^1.1.1",
-    "solid-js": "^1.4.4",
+    "@types/node": "^18.11.3",
+    "eslint": "^8.25.0",
+    "eslint-config-lxsmnsyc": "^0.4.8",
+    "pridepack": "^2.3.0",
+    "seroval": "^0.1.0",
+    "solid-js": "^1.6.11",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "solid-js": "^1.2"
+    "seroval": ">=0.1.0",
+    "solid-js": "^1.5"
+  },
+  "peerDependenciesMeta": {
+    "seroval": {
+      "optional": true
+    }
   },
   "scripts": {
     "prepublishOnly": "pridepack clean && pridepack build",
@@ -83,5 +139,36 @@
     "access": "public"
   },
   "author": "Alexis Munsayac",
-  "private": false
+  "private": false,
+  "typesVersions": {
+    "*": {
+      "atom": [
+        "./dist/types/atom.d.ts"
+      ],
+      "props": [
+        "./dist/types/props.d.ts"
+      ],
+      "provider": [
+        "./dist/types/provider.d.ts"
+      ],
+      "string": [
+        "./dist/types/string.d.ts"
+      ],
+      "media-query": [
+        "./dist/types/media-query.d.ts"
+      ],
+      "online-status": [
+        "./dist/types/online-status.d.ts"
+      ],
+      "page-visibility": [
+        "./dist/types/page-visibility.d.ts"
+      ],
+      "fetch": [
+        "./dist/types/fetch.d.ts"
+      ],
+      "server-value": [
+        "./dist/types/server-value.d.ts"
+      ]
+    }
+  }
 }

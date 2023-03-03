@@ -1,6 +1,6 @@
 import { createSignal } from 'solid-js';
 import { render } from 'solid-js/web';
-import { destructure } from 'solid-use';
+import { destructure } from 'solid-use/props';
 
 function Count(props) {
   const { value, increment, decrement } = destructure(props);
