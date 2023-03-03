@@ -1,3 +1,5 @@
+import { createMemo } from 'solid-js';
+
 export function omitProps<T extends Record<string, any>, K extends keyof T>(
   value: T,
   keys: K[],
@@ -45,7 +47,6 @@ export function pickProps<T extends Record<string, any>, K extends keyof T>(
 
   return newObject as Pick<T, K>;
 }
-import { createMemo } from 'solid-js';
 
 type ReactiveObject =
   | Record<string | symbol, any>
