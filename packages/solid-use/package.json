@@ -74,14 +74,14 @@
       "import": "./dist/esm/production/fetch.mjs",
       "types": "./dist/types/fetch.d.ts"
     },
-    "./classic-suspense": {
+    "./server-value": {
       "development": {
-        "require": "./dist/cjs/development/classic-suspense.cjs",
-        "import": "./dist/esm/development/classic-suspense.mjs"
+        "require": "./dist/cjs/development/server-value.cjs",
+        "import": "./dist/esm/development/server-value.mjs"
       },
-      "require": "./dist/cjs/production/classic-suspense.cjs",
-      "import": "./dist/esm/production/classic-suspense.mjs",
-      "types": "./dist/types/classic-suspense.d.ts"
+      "require": "./dist/cjs/production/server-value.cjs",
+      "import": "./dist/esm/production/server-value.mjs",
+      "types": "./dist/types/server-value.d.ts"
     }
   },
   "files": [
@@ -104,12 +104,19 @@
     "eslint": "^8.25.0",
     "eslint-config-lxsmnsyc": "^0.4.8",
     "pridepack": "^2.3.0",
-    "solid-js": "^1.6.0",
+    "seroval": "^0.1.0",
+    "solid-js": "^1.6.11",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "solid-js": "^1.5"
+    "solid-js": "^1.5",
+    "seroval": ">=0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "seroval": {
+      "optional": true
+    }
   },
   "scripts": {
     "prepublishOnly": "pridepack clean && pridepack build",
@@ -159,8 +166,8 @@
       "fetch": [
         "./dist/types/fetch.d.ts"
       ],
-      "classic-suspense": [
-        "./dist/types/classic-suspense.d.ts"
+      "server-value": [
+        "./dist/types/server-value.d.ts"
       ]
     }
   }

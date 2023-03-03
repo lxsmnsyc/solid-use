@@ -9,6 +9,6 @@
     "./online-status": "src/online-status.ts",
     "./page-visibility": "src/page-visibility.ts",
     "./fetch": "src/fetch.ts",
-    "./classic-suspense": "src/classic-suspense.ts"
+    "./server-value": "src/server-value.ts"
   }
 }

@@ -54,7 +54,7 @@ export interface ServerValueBoundaryProps {
   children: JSX.Element;
 }
 
-function serializeServerValues(value: Record<string, ServerValue>): JSX.Element {
+export function serializeServerValues(value: Record<string, ServerValue>): JSX.Element {
   const target = `window.${SOLID_USE}`;
   const assignment = `${target}=Object.assign(${target}||{},${seroval(value)});`;
   return {

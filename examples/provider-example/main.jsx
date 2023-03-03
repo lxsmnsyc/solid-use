@@ -1,6 +1,6 @@
 import { createSignal } from 'solid-js';
 import { render } from 'solid-js/web';
-import { createProvider, provide, inject, withProvider } from 'solid-use';
+import { createProvider, provide, inject, withProvider } from 'solid-use/provider';
 
 const CounterProvider = createProvider(undefined);
 
