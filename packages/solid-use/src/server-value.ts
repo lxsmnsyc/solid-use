@@ -5,7 +5,8 @@ import {
   JSX,
   useContext,
 } from 'solid-js';
-import seroval, {
+import {
+  serialize,
   ServerValue,
 } from 'seroval';
 import {
@@ -20,7 +21,7 @@ const SOLID_USE = '__SOLID_USE_SV__';
 function serializeServerValue<T extends ServerValue>(id: string, value: T): JSX.Element {
   const target = `window.${SOLID_USE}`;
   const init = `${target}=${target}||{}`;
-  const assignment = `(${init})[${JSON.stringify(id)}]=${seroval(value)};`;
+  const assignment = `(${init})[${JSON.stringify(id)}]=${serialize(value)};`;
   return {
     t: `<script>${assignment}</script>`,
   } as unknown as JSX.Element;
@@ -39,14 +40,20 @@ export function useServerValue<T extends ServerValue>(source: () => T): T {
     if (isServer) {
       record[id] = source();
     }
-    return record[id] as T;
+    if (id in record) {
+      return record[id] as T;
+    }
+    return source();
   }
   if (isServer) {
     const value = source();
     useAssets(() => serializeServerValue(id, value));
     return value;
   }
-  return window[SOLID_USE][id] as T;
+  if (id in window[SOLID_USE]) {
+    return window[SOLID_USE][id] as T;
+  }
+  return source();
 }
 
 export interface ServerValueBoundaryProps {
@@ -56,7 +63,7 @@ export interface ServerValueBoundaryProps {
 
 export function serializeServerValues(value: Record<string, ServerValue>): JSX.Element {
   const target = `window.${SOLID_USE}`;
-  const assignment = `${target}=Object.assign(${target}||{},${seroval(value)});`;
+  const assignment = `${target}=Object.assign(${target}||{},${serialize(value)});`;
   return {
     t: `<script>${assignment}</script>`,
   } as unknown as JSX.Element;
