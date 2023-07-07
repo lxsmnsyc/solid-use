@@ -100,18 +100,18 @@
   ],
   "name": "solid-use",
   "devDependencies": {
-    "@types/node": "^18.15.3",
-    "eslint": "^8.36.0",
-    "eslint-config-lxsmnsyc": "^0.5.1",
-    "pridepack": "^2.4.2",
-    "seroval": "^0.5.0",
-    "solid-js": "^1.6.15",
+    "@types/node": "^20.4.0",
+    "eslint": "^8.44.0",
+    "eslint-config-lxsmnsyc": "^0.6.5",
+    "pridepack": "^2.4.4",
+    "seroval": "^0.9.0",
+    "solid-js": "^1.7.7",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "seroval": ">=0.5.0",
-    "solid-js": "^1.5"
+    "seroval": ">=0.9.0",
+    "solid-js": "^1.7"
   },
   "peerDependenciesMeta": {
     "seroval": {
