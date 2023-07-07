@@ -23,7 +23,7 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       solid-use:
-        specifier: 0.7.0
+        specifier: 0.7.1
         version: link:../../packages/solid-use
     devDependencies:
       vite:
@@ -39,7 +39,7 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       solid-use:
-        specifier: 0.7.0
+        specifier: 0.7.1
         version: link:../../packages/solid-use
     devDependencies:
       vite:
@@ -55,7 +55,7 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       solid-use:
-        specifier: 0.7.0
+        specifier: 0.7.1
         version: link:../../packages/solid-use
     devDependencies:
       vite:
