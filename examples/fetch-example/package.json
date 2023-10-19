@@ -7,11 +7,11 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.4.1",
-    "vite-plugin-solid": "^2.7.0"
+    "vite": "^4.5.0",
+    "vite-plugin-solid": "^2.7.2"
   },
   "dependencies": {
-    "solid-js": "^1.7.7",
+    "solid-js": "^1.8.1",
     "solid-use": "0.7.1"
   },
   "private": true
