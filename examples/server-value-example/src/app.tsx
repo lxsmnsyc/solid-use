@@ -1,6 +1,6 @@
 // @refresh reload
 import { createSignal } from 'solid-js';
-import { useServerValue } from 'solid-use/server-value';
+import useServerValue from 'solid-use/server-value';
 import './app.css';
 
 export default function App() {
@@ -10,6 +10,7 @@ export default function App() {
   return (
     <main>
       <h1>Hello world!</h1>
+      <h2>Server rendered with {start}</h2>
       <button
         type="button"
         class="increment"

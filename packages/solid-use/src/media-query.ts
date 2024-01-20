@@ -13,26 +13,27 @@ function getMediaMatcher(query: string): MediaQueryList {
   return newMedia;
 }
 
-export function useMediaQuery(query: string): () => boolean {
-  if (isServer) {
-    return () => false;
-  }
-  const media = getMediaMatcher(query);
-  const [state, setState] = createSignal(false);
+export const useMediaQuery = isServer
+  ? (_query: string): (() => boolean) =>
+      () =>
+        false
+  : (query: string): (() => boolean) => {
+      const media = getMediaMatcher(query);
+      const [state, setState] = createSignal(false);
 
-  createEffect(() => {
-    const callback = () => {
-      setState(media.matches);
+      createEffect(() => {
+        const callback = () => {
+          setState(media.matches);
+        };
+        callback();
+        media.addEventListener('change', callback, false);
+        onCleanup(() => {
+          media.removeEventListener('change', callback, false);
+        });
+      });
+
+      return state;
     };
-    callback();
-    media.addEventListener('change', callback, false);
-    onCleanup(() => {
-      media.removeEventListener('change', callback, false);
-    });
-  });
-
-  return state;
-}
 
 export function usePrefersDark(): () => boolean {
   return useMediaQuery('(prefers-color-scheme: dark)');

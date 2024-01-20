@@ -5,7 +5,7 @@ A primitive that allows to pass server-side values to client-side. This is usefu
 ## `useServerValue`
 
 ```js
-import { useServerValue } from 'solid-use/server-value';
+import useServerValue from 'solid-use/server-value';
 
 // This is the most common problem for SSR + hydration
 // A function that isn't idempotent may cause hydration mismatches

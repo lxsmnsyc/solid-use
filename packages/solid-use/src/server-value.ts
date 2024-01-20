@@ -7,7 +7,7 @@ interface ServerHydrationContext extends HydrationContext {
   serialize(key: string, value: any, defer: boolean): void;
 }
 
-export const useServerValue = isServer
+const useServerValue = isServer
   ? <T>(cb: () => T): T => {
       const ctx = sharedConfig.context;
       const value = cb();
@@ -30,3 +30,5 @@ export const useServerValue = isServer
       }
       return cb();
     };
+
+export default useServerValue;
