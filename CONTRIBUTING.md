@@ -54,4 +54,4 @@ The development of this project heavily relies on the use of [Classic Yarn (1.x)
 
 ### Styling
 
-This project follows the [AirBnb JavaScript Style Guide](https://github.com/airbnb/javascript) and is enforced through the use [ESLint](https://eslint.org/) and [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint). It is recommended to have the [ESLint plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) during development.
+TODO

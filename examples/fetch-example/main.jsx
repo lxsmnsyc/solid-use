@@ -1,4 +1,4 @@
-import { Suspense } from 'solid-js';
+import { Suspense, Show } from 'solid-js';
 import { render } from 'solid-js/web';
 import fetch from 'solid-use/fetch';
 

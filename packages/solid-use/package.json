@@ -100,23 +100,14 @@
   ],
   "name": "solid-use",
   "devDependencies": {
-    "@types/node": "^20.8.7",
-    "eslint": "^8.51.0",
-    "eslint-config-lxsmnsyc": "^0.6.5",
-    "pridepack": "2.5.1",
-    "seroval": "^0.12.0",
-    "solid-js": "^1.8.1",
+    "@types/node": "^20.11.5",
+    "pridepack": "2.6.0",
+    "solid-js": "^1.8.11",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "seroval": ">=0.9.0",
     "solid-js": "^1.7"
-  },
-  "peerDependenciesMeta": {
-    "seroval": {
-      "optional": true
-    }
   },
   "scripts": {
     "prepublishOnly": "pridepack clean && pridepack build",
