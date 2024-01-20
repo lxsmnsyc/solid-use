@@ -45,4 +45,3 @@ export function usePrefersLight(): () => boolean {
 export function usePrefersReducedMotion(): () => boolean {
   return useMediaQuery('(prefers-reduced-motion)');
 }
-

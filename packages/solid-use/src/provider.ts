@@ -1,4 +1,5 @@
-import { Component, onCleanup } from 'solid-js';
+import { onCleanup } from 'solid-js';
+import type { Component } from 'solid-js';
 
 let PROVIDER: ProviderTree | undefined;
 
@@ -77,5 +78,5 @@ export function inject<T>(context: Provider<T>): T {
 }
 
 export function withProvider<T>(Comp: Component<T>): Component<T> {
-  return (props) => providerScope(() => Comp(props));
+  return props => providerScope(() => Comp(props));
 }

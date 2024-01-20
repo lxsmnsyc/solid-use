@@ -1,10 +1,5 @@
-// eslint-disable-next-line max-classes-per-file
-import {
-  createEffect,
-  createResource,
-  createSignal,
-  Resource,
-} from 'solid-js';
+import { createEffect, createResource, createSignal } from 'solid-js';
+import type { Resource } from 'solid-js';
 
 const nativeFetch = globalThis.fetch;
 
@@ -37,10 +32,7 @@ export class SuspensefulFetchResponse {
   }
 
   private readResponse(): FetchParameters {
-    return [
-      fromSignal(this.input),
-      fromSignal(this.init),
-    ];
+    return [fromSignal(this.input), fromSignal(this.init)];
   }
 
   arrayBuffer(): Resource<ArrayBuffer | undefined> {
@@ -109,10 +101,7 @@ export interface FetchFailure {
   value: any;
 }
 
-export type FetchResult<T> =
-  | FetchPending<T>
-  | FetchSuccess<T>
-  | FetchFailure;
+export type FetchResult<T> = FetchPending<T> | FetchSuccess<T> | FetchFailure;
 
 class InternalFetchResult<T> {
   private source: () => FetchResult<T>;
@@ -144,13 +133,13 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
     });
 
     result.then(
-      (val) => {
+      val => {
         setValue({
           status: 'success',
           value: val,
         });
       },
-      (val) => {
+      val => {
         setValue({
           status: 'failure',
           value: val,
@@ -176,55 +165,42 @@ export class SuspenselessFetchResponse {
   }
 
   private async readResponse() {
-    return nativeFetch(
-      fromSignal(this.input),
-      fromSignal(this.init),
-    );
+    return await nativeFetch(fromSignal(this.input), fromSignal(this.init));
   }
 
   arrayBuffer(): FetchResult<ArrayBuffer> {
-    return useAsync(
-      async () => {
-        const response = await this.readResponse();
-        return response.arrayBuffer();
-      },
-    );
+    return await useAsync(async () => {
+      const response = await this.readResponse();
+      return response.arrayBuffer();
+    });
   }
 
   blob(): FetchResult<Blob> {
-    return useAsync(
-      async () => {
-        const response = await this.readResponse();
-        return response.blob();
-      },
-    );
+    return useAsync(async () => {
+      const response = await this.readResponse();
+      return response.blob();
+    });
   }
 
   formData(): FetchResult<FormData> {
-    return useAsync(
-      async () => {
-        const response = await this.readResponse();
-        return response.formData();
-      },
-    );
+    return useAsync(async () => {
+      const response = await this.readResponse();
+      return response.formData();
+    });
   }
 
   json<T>(): FetchResult<T> {
-    return useAsync(
-      async () => {
-        const response = await this.readResponse();
-        return response.json();
-      },
-    );
+    return useAsync(async () => {
+      const response = await this.readResponse();
+      return response.json();
+    });
   }
 
   text(): FetchResult<string> {
-    return useAsync(
-      async () => {
-        const response = await this.readResponse();
-        return response.text();
-      },
-    );
+    return useAsync(async () => {
+      const response = await this.readResponse();
+      return response.text();
+    });
   }
 }
 
