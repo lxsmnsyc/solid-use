@@ -29,6 +29,7 @@ pnpm add solid-js solid-use
 - [`solid-use/online-status`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/online-status.md)
 - [`solid-use/page-visibility`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/page-visibility.md)
 - [`solid-use/server-value`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/server-value.md)
+- [`solid-use/client-only`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/client-only.md)
 
 ## Sponsors
 
