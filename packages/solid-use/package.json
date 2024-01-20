@@ -82,6 +82,15 @@
       "require": "./dist/cjs/production/server-value.cjs",
       "import": "./dist/esm/production/server-value.mjs",
       "types": "./dist/types/server-value.d.ts"
+    },
+    "./client-only": {
+      "development": {
+        "require": "./dist/cjs/development/client-only.cjs",
+        "import": "./dist/esm/development/client-only.mjs"
+      },
+      "require": "./dist/cjs/production/client-only.cjs",
+      "import": "./dist/esm/production/client-only.mjs",
+      "types": "./dist/types/client-only.d.ts"
     }
   },
   "files": [
@@ -159,6 +168,9 @@
       ],
       "server-value": [
         "./dist/types/server-value.d.ts"
+      ],
+      "client-only": [
+        "./dist/types/client-only.d.ts"
       ]
     }
   }
