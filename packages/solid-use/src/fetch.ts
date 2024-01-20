@@ -169,7 +169,7 @@ export class SuspenselessFetchResponse {
   }
 
   arrayBuffer(): FetchResult<ArrayBuffer> {
-    return await useAsync(async () => {
+    return useAsync(async () => {
       const response = await this.readResponse();
       return response.arrayBuffer();
     });
