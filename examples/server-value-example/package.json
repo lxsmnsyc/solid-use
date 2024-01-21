@@ -1,5 +1,6 @@
 {
-  "name": "example-bare",
+  "name": "server-value-example",
+  "version": "0.7.2",
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
