@@ -1,6 +1,7 @@
 // @refresh reload
 import { createSignal } from 'solid-js';
 import useServerValue from 'solid-use/server-value';
+import { ClientOnly } from 'solid-use/client-only';
 import './app.css';
 
 export default function App() {
@@ -11,6 +12,9 @@ export default function App() {
     <main>
       <h1>Hello world!</h1>
       <h2>Server rendered with {start}</h2>
+      <ClientOnly>
+        <h2>Client rendered with {Date.now()}</h2>
+      </ClientOnly>
       <button
         type="button"
         class="increment"
