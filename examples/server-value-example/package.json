@@ -2,6 +2,7 @@
   "name": "server-value-example",
   "version": "0.7.2",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
