@@ -48,22 +48,17 @@ export function pickProps<T extends Record<string, any>, K extends keyof T>(
   return newObject as Pick<T, K>;
 }
 
-type ReactiveObject =
-  | Record<string | symbol, any>
-  | any[];
+type ReactiveObject = Record<string | symbol, any> | any[];
 
 export type Spread<T extends ReactiveObject> = {
   [key in keyof T]: Readonly<() => T[key]>;
-}
+};
 
-export type KeyType<T extends ReactiveObject> =
-   T extends any[]
-    ? number
-    : keyof T;
+export type KeyType<T extends ReactiveObject> = T extends any[]
+  ? number
+  : keyof T;
 
-export function destructure<T extends ReactiveObject>(
-  source: T,
-): Spread<T> {
+export function destructure<T extends ReactiveObject>(source: T): Spread<T> {
   const proxy = new Proxy((Array.isArray(source) ? [] : {}) as Spread<T>, {
     get(target, key) {
       const ref = Reflect.get(target, key);
@@ -79,9 +74,7 @@ export function destructure<T extends ReactiveObject>(
   return proxy;
 }
 
-export function spread<T extends ReactiveObject>(
-  source: T,
-): Spread<T> {
+export function spread<T extends ReactiveObject>(source: T): Spread<T> {
   const proxy = (Array.isArray(source) ? [] : {}) as Spread<T>;
 
   for (const key of Object.keys(source)) {
