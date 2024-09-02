@@ -39,3 +39,13 @@ const MyLazyComponent = clientOnly(() => import('./path/to/my-lazy-component'));
   <MyLazyComponent />
 </Suspense>
 ```
+
+## `clientComponent`
+
+A higher-order component utility to indicate that the given component would only render on the eclient-side.
+
+```js
+import { clientComponent } from 'solid-use/client-only';
+
+const Example = clientComponent(() => <h1>I'm client only!</h1>);
+```
