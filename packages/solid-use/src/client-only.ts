@@ -1,3 +1,4 @@
+import type { Component, JSX } from 'solid-js';
 import {
   Show,
   createComponent,
@@ -7,11 +8,10 @@ import {
   onMount,
   sharedConfig,
 } from 'solid-js';
-import type { Component, JSX } from 'solid-js';
 import { isServer } from 'solid-js/web';
 
 export const createClientSignal = isServer
-  ? (): (() => boolean) => () => true
+  ? (): (() => boolean) => () => false
   : (): (() => boolean) => {
       const [flag, setFlag] = createSignal(false);
 
@@ -50,19 +50,28 @@ export function clientOnly<T extends Component<any>>(
   const Lazy = lazy(fn);
   return ((props: any) => {
     if (sharedConfig.context) {
-      const [flag, setFlag] = createSignal(false);
-
-      onMount(() => {
-        setFlag(true);
-      });
+      const isClient = createClientSignal();
 
       return createMemo(() => {
-        if (flag()) {
+        if (isClient()) {
           return createComponent(Lazy, props);
         }
         return undefined;
       });
     }
     return createComponent(Lazy, props);
+  }) as unknown as T;
+}
+
+export function clientComponent<T extends Component<any>>(Comp: T): T {
+  return ((props: any) => {
+    const isClient = createClientSignal();
+
+    return createMemo(() => {
+      if (isClient()) {
+        return createComponent(Comp, props);
+      }
+      return undefined;
+    });
   }) as unknown as T;
 }
