@@ -1,6 +1,6 @@
 {
   "name": "server-value-example",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "@solidjs/start": "^0.4.10",
     "solid-js": "^1.8.11",
-    "solid-use": "0.8.0",
+    "solid-use": "0.9.0",
     "vinxi": "^0.1.4"
   },
   "devDependencies": {
