@@ -6,8 +6,8 @@
     "examples/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^1.5.2",
-    "lerna": "^8.0.2",
-    "typescript": "^5.3.3"
+    "@biomejs/biome": "^1.8.3",
+    "lerna": "^8.1.8",
+    "typescript": "^5.5.4"
   }
 }
