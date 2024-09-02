@@ -1,5 +1,5 @@
-import { onCleanup } from 'solid-js';
 import type { Component } from 'solid-js';
+import { onCleanup } from 'solid-js';
 
 let PROVIDER: ProviderTree | undefined;
 

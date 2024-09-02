@@ -1,5 +1,5 @@
-import { createEffect, createResource, createSignal } from 'solid-js';
 import type { Resource } from 'solid-js';
+import { createEffect, createResource, createSignal } from 'solid-js';
 
 const nativeFetch = globalThis.fetch;
 
