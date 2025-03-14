@@ -3,102 +3,110 @@
   "type": "module",
   "exports": {
     "./atom": {
+      "types": "./dist/types/atom.d.ts",
       "development": {
         "require": "./dist/cjs/development/atom.cjs",
         "import": "./dist/esm/development/atom.mjs"
       },
       "require": "./dist/cjs/production/atom.cjs",
-      "import": "./dist/esm/production/atom.mjs",
-      "types": "./dist/types/atom.d.ts"
+      "import": "./dist/esm/production/atom.mjs"
     },
     "./props": {
+      "types": "./dist/types/props.d.ts",
       "development": {
         "require": "./dist/cjs/development/props.cjs",
         "import": "./dist/esm/development/props.mjs"
       },
       "require": "./dist/cjs/production/props.cjs",
-      "import": "./dist/esm/production/props.mjs",
-      "types": "./dist/types/props.d.ts"
+      "import": "./dist/esm/production/props.mjs"
     },
     "./provider": {
+      "types": "./dist/types/provider.d.ts",
       "development": {
         "require": "./dist/cjs/development/provider.cjs",
         "import": "./dist/esm/development/provider.mjs"
       },
       "require": "./dist/cjs/production/provider.cjs",
-      "import": "./dist/esm/production/provider.mjs",
-      "types": "./dist/types/provider.d.ts"
+      "import": "./dist/esm/production/provider.mjs"
     },
     "./string": {
+      "types": "./dist/types/string.d.ts",
       "development": {
         "require": "./dist/cjs/development/string.cjs",
         "import": "./dist/esm/development/string.mjs"
       },
       "require": "./dist/cjs/production/string.cjs",
-      "import": "./dist/esm/production/string.mjs",
-      "types": "./dist/types/string.d.ts"
+      "import": "./dist/esm/production/string.mjs"
     },
     "./media-query": {
+      "types": "./dist/types/media-query.d.ts",
       "development": {
         "require": "./dist/cjs/development/media-query.cjs",
         "import": "./dist/esm/development/media-query.mjs"
       },
       "require": "./dist/cjs/production/media-query.cjs",
-      "import": "./dist/esm/production/media-query.mjs",
-      "types": "./dist/types/media-query.d.ts"
+      "import": "./dist/esm/production/media-query.mjs"
     },
     "./online-status": {
+      "types": "./dist/types/online-status.d.ts",
       "development": {
         "require": "./dist/cjs/development/online-status.cjs",
         "import": "./dist/esm/development/online-status.mjs"
       },
       "require": "./dist/cjs/production/online-status.cjs",
-      "import": "./dist/esm/production/online-status.mjs",
-      "types": "./dist/types/online-status.d.ts"
+      "import": "./dist/esm/production/online-status.mjs"
     },
     "./page-visibility": {
+      "types": "./dist/types/page-visibility.d.ts",
       "development": {
         "require": "./dist/cjs/development/page-visibility.cjs",
         "import": "./dist/esm/development/page-visibility.mjs"
       },
       "require": "./dist/cjs/production/page-visibility.cjs",
-      "import": "./dist/esm/production/page-visibility.mjs",
-      "types": "./dist/types/page-visibility.d.ts"
+      "import": "./dist/esm/production/page-visibility.mjs"
     },
     "./fetch": {
+      "types": "./dist/types/fetch.d.ts",
       "development": {
         "require": "./dist/cjs/development/fetch.cjs",
         "import": "./dist/esm/development/fetch.mjs"
       },
       "require": "./dist/cjs/production/fetch.cjs",
-      "import": "./dist/esm/production/fetch.mjs",
-      "types": "./dist/types/fetch.d.ts"
+      "import": "./dist/esm/production/fetch.mjs"
     },
     "./server-value": {
+      "types": "./dist/types/server-value.d.ts",
       "development": {
         "require": "./dist/cjs/development/server-value.cjs",
         "import": "./dist/esm/development/server-value.mjs"
       },
       "require": "./dist/cjs/production/server-value.cjs",
-      "import": "./dist/esm/production/server-value.mjs",
-      "types": "./dist/types/server-value.d.ts"
+      "import": "./dist/esm/production/server-value.mjs"
     },
     "./client-only": {
+      "types": "./dist/types/client-only.d.ts",
       "development": {
         "require": "./dist/cjs/development/client-only.cjs",
         "import": "./dist/esm/development/client-only.mjs"
       },
       "require": "./dist/cjs/production/client-only.cjs",
-      "import": "./dist/esm/production/client-only.mjs",
-      "types": "./dist/types/client-only.d.ts"
+      "import": "./dist/esm/production/client-only.mjs"
     }
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "engines": {
     "node": ">=10"
   },
   "license": "MIT",
-  "keywords": ["pridepack", "solid-js", "use", "hooks"],
+  "keywords": [
+    "pridepack",
+    "solid-js",
+    "use",
+    "hooks"
+  ],
   "name": "solid-use",
   "devDependencies": {
     "@types/node": "^22.13.10",
@@ -134,16 +142,36 @@
   "private": false,
   "typesVersions": {
     "*": {
-      "atom": ["./dist/types/atom.d.ts"],
-      "props": ["./dist/types/props.d.ts"],
-      "provider": ["./dist/types/provider.d.ts"],
-      "string": ["./dist/types/string.d.ts"],
-      "media-query": ["./dist/types/media-query.d.ts"],
-      "online-status": ["./dist/types/online-status.d.ts"],
-      "page-visibility": ["./dist/types/page-visibility.d.ts"],
-      "fetch": ["./dist/types/fetch.d.ts"],
-      "server-value": ["./dist/types/server-value.d.ts"],
-      "client-only": ["./dist/types/client-only.d.ts"]
+      "atom": [
+        "./dist/types/atom.d.ts"
+      ],
+      "props": [
+        "./dist/types/props.d.ts"
+      ],
+      "provider": [
+        "./dist/types/provider.d.ts"
+      ],
+      "string": [
+        "./dist/types/string.d.ts"
+      ],
+      "media-query": [
+        "./dist/types/media-query.d.ts"
+      ],
+      "online-status": [
+        "./dist/types/online-status.d.ts"
+      ],
+      "page-visibility": [
+        "./dist/types/page-visibility.d.ts"
+      ],
+      "fetch": [
+        "./dist/types/fetch.d.ts"
+      ],
+      "server-value": [
+        "./dist/types/server-value.d.ts"
+      ],
+      "client-only": [
+        "./dist/types/client-only.d.ts"
+      ]
     }
   }
 }

@@ -3,4 +3,5 @@ packages:
   - examples/**/*
 onlyBuiltDependencies:
   - '@biomejs/biome'
+  - '@parcel/watcher'
   - esbuild
