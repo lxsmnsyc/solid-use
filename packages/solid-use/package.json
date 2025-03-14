@@ -93,27 +93,19 @@
       "types": "./dist/types/client-only.d.ts"
     }
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "engines": {
     "node": ">=10"
   },
   "license": "MIT",
-  "keywords": [
-    "pridepack",
-    "solid-js",
-    "use",
-    "hooks"
-  ],
+  "keywords": ["pridepack", "solid-js", "use", "hooks"],
   "name": "solid-use",
   "devDependencies": {
-    "@types/node": "^22.5.2",
-    "pridepack": "2.6.1",
-    "solid-js": "^1.8.22",
-    "tslib": "^2.7.0",
-    "typescript": "^5.5.4"
+    "@types/node": "^22.13.10",
+    "pridepack": "2.6.4",
+    "solid-js": "^1.9.5",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "solid-js": "^1.7"
@@ -142,36 +134,16 @@
   "private": false,
   "typesVersions": {
     "*": {
-      "atom": [
-        "./dist/types/atom.d.ts"
-      ],
-      "props": [
-        "./dist/types/props.d.ts"
-      ],
-      "provider": [
-        "./dist/types/provider.d.ts"
-      ],
-      "string": [
-        "./dist/types/string.d.ts"
-      ],
-      "media-query": [
-        "./dist/types/media-query.d.ts"
-      ],
-      "online-status": [
-        "./dist/types/online-status.d.ts"
-      ],
-      "page-visibility": [
-        "./dist/types/page-visibility.d.ts"
-      ],
-      "fetch": [
-        "./dist/types/fetch.d.ts"
-      ],
-      "server-value": [
-        "./dist/types/server-value.d.ts"
-      ],
-      "client-only": [
-        "./dist/types/client-only.d.ts"
-      ]
+      "atom": ["./dist/types/atom.d.ts"],
+      "props": ["./dist/types/props.d.ts"],
+      "provider": ["./dist/types/provider.d.ts"],
+      "string": ["./dist/types/string.d.ts"],
+      "media-query": ["./dist/types/media-query.d.ts"],
+      "online-status": ["./dist/types/online-status.d.ts"],
+      "page-visibility": ["./dist/types/page-visibility.d.ts"],
+      "fetch": ["./dist/types/fetch.d.ts"],
+      "server-value": ["./dist/types/server-value.d.ts"],
+      "client-only": ["./dist/types/client-only.d.ts"]
     }
   }
 }
