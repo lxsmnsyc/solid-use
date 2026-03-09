@@ -1,5 +1,5 @@
-import { createEffect, createSignal, onCleanup } from 'solid-js';
-import { isServer } from 'solid-js/web';
+import { isServer } from '@solidjs/web';
+import { createSignal, createTrackedEffect, onCleanup } from 'solid-js';
 
 const MEDIA = new Map<string, MediaQueryList>();
 
@@ -21,7 +21,7 @@ export const useMediaQuery = isServer
       const media = getMediaMatcher(query);
       const [state, setState] = createSignal(false);
 
-      createEffect(() => {
+      createTrackedEffect(() => {
         const callback = () => {
           setState(media.matches);
         };

@@ -1,5 +1,9 @@
-import type { Resource } from 'solid-js';
-import { createEffect, createResource, createSignal } from 'solid-js';
+import {
+  type Accessor,
+  createMemo,
+  createSignal,
+  createTrackedEffect,
+} from 'solid-js';
 
 const nativeFetch = globalThis.fetch;
 
@@ -35,54 +39,49 @@ export class SuspensefulFetchResponse {
     return [fromSignal(this.input), fromSignal(this.init)];
   }
 
-  arrayBuffer(): Resource<ArrayBuffer | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.arrayBuffer();
-      },
-    )[0];
+  arrayBuffer(): Accessor<ArrayBuffer | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.arrayBuffer();
+    });
   }
 
-  blob(): Resource<Blob | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.blob();
-      },
-    )[0];
+  blob(): Accessor<Blob | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.blob();
+    });
   }
 
-  formData(): Resource<FormData | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.formData();
-      },
-    )[0];
+  formData(): Accessor<FormData | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.formData();
+    });
   }
 
-  json<T>(): Resource<T> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.json();
-      },
-    )[0];
+  json<T>(): Accessor<T> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.json();
+    });
   }
 
-  text(): Resource<string | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.text();
-      },
-    )[0];
+  text(): Accessor<string | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.text();
+    });
   }
 }
 
@@ -124,7 +123,7 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
     status: 'pending',
   });
 
-  createEffect(() => {
+  createTrackedEffect(() => {
     const result = source();
 
     setValue({

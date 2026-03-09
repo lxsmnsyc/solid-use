@@ -1,21 +1,20 @@
+import { isServer } from '@solidjs/web';
 import type { Component, JSX } from 'solid-js';
 import {
-  Show,
   createComponent,
   createMemo,
   createSignal,
+  createTrackedEffect,
   lazy,
-  onMount,
-  sharedConfig,
+  Show,
 } from 'solid-js';
-import { isServer } from 'solid-js/web';
 
 export const createClientSignal = isServer
   ? (): (() => boolean) => () => false
   : (): (() => boolean) => {
       const [flag, setFlag] = createSignal(false);
 
-      onMount(() => {
+      createTrackedEffect(() => {
         setFlag(true);
       });
 
@@ -44,25 +43,6 @@ export const ClientOnly = (props: ClientOnlyProps): JSX.Element => {
   });
 };
 
-export function clientOnly<T extends Component<any>>(
-  fn: () => Promise<{ default: T }>,
-): T {
-  const Lazy = lazy(fn);
-  return ((props: any) => {
-    if (sharedConfig.context) {
-      const isClient = createClientSignal();
-
-      return createMemo(() => {
-        if (isClient()) {
-          return createComponent(Lazy, props);
-        }
-        return undefined;
-      });
-    }
-    return createComponent(Lazy, props);
-  }) as unknown as T;
-}
-
 export function clientComponent<T extends Component<any>>(Comp: T): T {
   return ((props: any) => {
     const isClient = createClientSignal();
@@ -74,4 +54,11 @@ export function clientComponent<T extends Component<any>>(Comp: T): T {
       return undefined;
     });
   }) as unknown as T;
+}
+
+export function clientOnly<T extends Component<any>>(
+  fn: () => Promise<{ default: T }>,
+): T {
+  const Lazy = lazy(fn);
+  return clientComponent(Lazy);
 }

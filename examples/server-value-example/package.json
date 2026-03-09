@@ -15,7 +15,7 @@
     "vinxi": "^0.5.3"
   },
   "devDependencies": {
-    "typescript": "^5.8.2"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=18"

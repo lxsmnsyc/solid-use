@@ -1,12 +1,12 @@
-import { createEffect, createSignal, onCleanup } from 'solid-js';
-import { isServer } from 'solid-js/web';
+import { isServer } from '@solidjs/web';
+import { createSignal, createTrackedEffect, onCleanup } from 'solid-js';
 
 const usePageVisibility = isServer
   ? (): (() => boolean) => () => true
   : (): (() => boolean) => {
       const [state, setState] = createSignal(true);
 
-      createEffect(() => {
+      createTrackedEffect(() => {
         const callback = () => {
           setState(document.visibilityState === 'visible');
         };

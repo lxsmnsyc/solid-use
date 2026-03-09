@@ -1,30 +1,25 @@
+import { isServer } from '@solidjs/web';
 import { sharedConfig } from 'solid-js';
-import { isServer } from 'solid-js/web';
+import type { HydrationContext } from 'solid-js/types/server/shared.js';
 
-type HydrationContext = NonNullable<(typeof sharedConfig)['context']>;
-
-interface ServerHydrationContext extends HydrationContext {
-  serialize(key: string, value: any, defer: boolean): void;
+interface ServerSharedConfig {
+  context?: HydrationContext;
 }
 
 const useServerValue = isServer
   ? <T>(cb: () => T): T => {
-      const ctx = sharedConfig.context;
+      const id = sharedConfig.getNextContextId();
+      const ctx = (sharedConfig as ServerSharedConfig).context;
       const value = cb();
-      if (ctx) {
-        (ctx as ServerHydrationContext).serialize(
-          `${ctx.id}${ctx.count++}`,
-          value,
-          false,
-        );
+      if (ctx && id != null) {
+        ctx.serialize(id, value, false);
       }
       return value;
     }
   : <T>(cb: () => T): T => {
-      const ctx = sharedConfig.context;
-      if (ctx && sharedConfig.load && sharedConfig.has) {
-        const id = `${ctx.id}${ctx.count++}`;
-        if (sharedConfig.has(id)) {
+      if (sharedConfig.load && sharedConfig.has) {
+        const id = sharedConfig.getNextContextId();
+        if (id != null && sharedConfig.has(id)) {
           return sharedConfig.load(id);
         }
       }
