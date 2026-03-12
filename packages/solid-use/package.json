@@ -117,8 +117,8 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@solidjs/web": "2.0.0-beta.1",
-    "solid-js": "2.0.0-beta.1"
+    "@solidjs/web": "next",
+    "solid-js": "next"
   },
   "scripts": {
     "prepublishOnly": "pridepack clean && pridepack build",
