@@ -1,22 +1,22 @@
-import { Suspense, Show } from 'solid-js';
-import { render } from 'solid-js/web';
+import { render } from '@solidjs/web';
+import { Loading } from 'solid-js';
 import fetch from 'solid-use/fetch';
 
 function SuspensefulDogImage() {
-  const result = fetch('https://dog.ceo/api/breed/shiba/images/random', {}, true).json();
+  const result = fetch(
+    'https://dog.ceo/api/breed/shiba/images/random',
+    {},
+    true,
+  ).json();
 
-  return (
-    <Show when={result()}>
-      <img src={result().message} alt={result().message} />
-    </Show>
-  );
+  return <img src={result().message} alt={result().message} />;
 }
 
 function App() {
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Loading fallback={<h1>Loading...</h1>}>
       <SuspensefulDogImage />
-    </Suspense>
+    </Loading>
   );
 }
 

@@ -1,22 +1,35 @@
+import { render } from '@solidjs/web';
 import { createSignal } from 'solid-js';
-import { render } from 'solid-js/web';
-import { createProvider, provide, inject, withProvider } from 'solid-use/provider';
+import {
+  createProvider,
+  inject,
+  provide,
+  withProvider,
+} from 'solid-use/provider';
 
 const CounterProvider = createProvider(undefined);
 
 function Increment() {
   const { increment } = inject(CounterProvider);
-  return <button type="button" onClick={increment}>Increment</button>
+  return (
+    <button type="button" onClick={increment}>
+      Increment
+    </button>
+  );
 }
 
 function Decrement() {
   const { decrement } = inject(CounterProvider);
-  return <button type="button" onClick={decrement}>Decrement</button>
+  return (
+    <button type="button" onClick={decrement}>
+      Decrement
+    </button>
+  );
 }
 
 function Count() {
   const { value } = inject(CounterProvider);
-  return <h1>Count: {value()}</h1>
+  return <h1>Count: {value()}</h1>;
 }
 
 const App = withProvider(() => {

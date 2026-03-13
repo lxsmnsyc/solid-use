@@ -11,7 +11,7 @@
   "dependencies": {
     "@solidjs/start": "^1.1.3",
     "solid-js": "^1.8.11",
-    "solid-use": "0.9.1",
+    "solid-use": "workspace:*",
     "vinxi": "^0.5.3"
   },
   "devDependencies": {

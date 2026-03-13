@@ -1,5 +1,5 @@
+import { render } from '@solidjs/web';
 import { createSignal } from 'solid-js';
-import { render } from 'solid-js/web';
 import { destructure } from 'solid-use/props';
 
 function Count(props) {
@@ -8,25 +8,29 @@ function Count(props) {
   return (
     <>
       <h1>Count: {value()}</h1>
-      <button type="button" onClick={decrement()}>Decrement</button>
-      <button type="button" onClick={increment()}>Increment</button>
+      <button type="button" onClick={decrement()}>
+        Decrement
+      </button>
+      <button type="button" onClick={increment()}>
+        Increment
+      </button>
     </>
   );
 }
 
 function CountWrapper(props) {
-  return <Count {...props} />
+  return <Count {...props} />;
 }
 
 function App() {
   const [count, setCount] = createSignal(0);
 
   function increment() {
-    setCount(count() + 1);
+    setCount(c => c + 1);
   }
 
   function decrement() {
-    setCount(count() - 1);
+    setCount(c => c - 1);
   }
 
   return (
