@@ -16,5 +16,8 @@
     "solid-js": "2.0.0-beta.2",
     "solid-use": "workspace:*"
   },
-  "private": true
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  }
 }
