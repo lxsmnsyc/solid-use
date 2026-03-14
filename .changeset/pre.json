@@ -9,6 +9,7 @@
     "solid-use": "0.9.1"
   },
   "changesets": [
-    "chilly-candles-travel"
+    "chilly-candles-travel",
+    "mighty-cycles-fetch"
   ]
 }

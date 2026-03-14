@@ -1,22 +1,23 @@
 import { isServer } from '@solidjs/web';
-import { createSignal, createTrackedEffect, onCleanup } from 'solid-js';
+import { createSignal, onSettled } from 'solid-js';
 
 const useOnlineStatus = isServer
   ? (): (() => boolean) => () => true
   : (): (() => boolean) => {
       const [state, setState] = createSignal(true);
 
-      createTrackedEffect(() => {
+      onSettled(() => {
         const callback = () => {
           setState(navigator.onLine);
         };
         callback();
         window.addEventListener('online', callback, false);
         window.addEventListener('offline', callback, false);
-        onCleanup(() => {
+
+        return () => {
           window.removeEventListener('online', callback, false);
           window.removeEventListener('offline', callback, false);
-        });
+        };
       });
 
       return state;
