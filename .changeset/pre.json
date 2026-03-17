@@ -9,6 +9,7 @@
     "solid-use": "0.9.1"
   },
   "changesets": [
+    "calm-ideas-grab",
     "chilly-candles-travel",
     "mighty-cycles-fetch"
   ]

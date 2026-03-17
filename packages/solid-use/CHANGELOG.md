@@ -1,5 +1,11 @@
 # solid-use
 
+## 1.0.0-next.2
+
+### Patch Changes
+
+- 57c52c9: fix version dependency
+
 ## 1.0.0-next.1
 
 ### Patch Changes
