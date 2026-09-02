@@ -29,6 +29,25 @@ pnpm add solid-js solid-use
 - [`solid-use/online-status`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/online-status.md)
 - [`solid-use/page-visibility`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/page-visibility.md)
 - [`solid-use/server-value`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/server-value.md)
+- [`solid-use/client-only`](https://github.com/lxsmnsyc/solid-use/tree/main/docs/client-only.md)
+
+## Development
+
+```bash
+pnpm install
+pnpm build
+pnpm test
+pnpm lint
+pnpm fmt
+pnpm type-check
+```
+
+The test suite runs twice: once against Solid's browser build in a `jsdom`
+environment, and once against its server build in Node. Tests under `test/client`
+and `test/server` are environment-specific, while `test/shared` runs in both to
+prove the isomorphic primitives behave the same either way.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
 
 ## Sponsors
 

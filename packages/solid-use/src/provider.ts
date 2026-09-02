@@ -77,8 +77,6 @@ export function inject<T>(context: Provider<T>): T {
   return context.defaultValue;
 }
 
-export function withProvider<T extends Record<string, any>>(
-  Comp: Component<T>,
-): Component<T> {
-  return props => providerScope(() => Comp(props));
+export function withProvider<T extends Record<string, any>>(Comp: Component<T>): Component<T> {
+  return (props) => providerScope(() => Comp(props));
 }

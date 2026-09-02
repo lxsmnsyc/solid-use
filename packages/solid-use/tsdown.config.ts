@@ -1,0 +1,19 @@
+import { defineConfig } from 'tsdown';
+
+export default defineConfig({
+  entry: {
+    atom: 'src/atom.ts',
+    props: 'src/props.ts',
+    provider: 'src/provider.ts',
+    string: 'src/string.ts',
+    'media-query': 'src/media-query.ts',
+    'online-status': 'src/online-status.ts',
+    'page-visibility': 'src/page-visibility.ts',
+    fetch: 'src/fetch.ts',
+    'server-value': 'src/server-value.ts',
+    'client-only': 'src/client-only.ts',
+  },
+  platform: 'neutral',
+  dts: true,
+  exports: true,
+});

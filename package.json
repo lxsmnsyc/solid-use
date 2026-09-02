@@ -1,10 +1,30 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": ["packages/*", "examples/*"],
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "pnpm recursive run build",
+    "cs:add": "changeset add",
+    "cs:pub": "changeset publish",
+    "cs:ver": "changeset version",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt --check .",
+    "lint": "oxlint --type-aware",
+    "lint:fix": "oxlint --type-aware --fix",
+    "test": "pnpm recursive run test",
+    "type-check": "pnpm recursive run type-check"
+  },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "lerna": "^8.2.1",
-    "typescript": "^5.8.2"
+    "@changesets/cli": "^2.29.7",
+    "@lxsmnsyc/oxlint-config": "^0.1.2",
+    "@solidjs/vite-plugin": "3.0.0-next.37",
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.81.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "typescript": "^5.9.3"
   }
 }

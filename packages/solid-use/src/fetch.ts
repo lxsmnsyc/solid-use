@@ -1,5 +1,4 @@
-import type { Resource } from 'solid-js';
-import { createEffect, createResource, createSignal } from 'solid-js';
+import { type Accessor, createMemo, createSignal, createTrackedEffect } from 'solid-js';
 
 const nativeFetch = globalThis.fetch;
 
@@ -19,14 +18,11 @@ function fromSignal<T>(value: Signalify<T>): T {
 type FetchParameters = [RequestInfo | URL, RequestInit | undefined];
 
 export class SuspensefulFetchResponse {
-  private input: Signalify<RequestInfo | URL>;
+  private readonly input: Signalify<RequestInfo | URL>;
 
-  private init?: Signalify<RequestInit | undefined>;
+  private readonly init?: Signalify<RequestInit | undefined>;
 
-  constructor(
-    input: Signalify<RequestInfo | URL>,
-    init?: Signalify<RequestInit | undefined>,
-  ) {
+  constructor(input: Signalify<RequestInfo | URL>, init?: Signalify<RequestInit | undefined>) {
     this.input = input;
     this.init = init;
   }
@@ -35,54 +31,49 @@ export class SuspensefulFetchResponse {
     return [fromSignal(this.input), fromSignal(this.init)];
   }
 
-  arrayBuffer(): Resource<ArrayBuffer | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.arrayBuffer();
-      },
-    )[0];
+  arrayBuffer(): Accessor<ArrayBuffer | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.arrayBuffer();
+    });
   }
 
-  blob(): Resource<Blob | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.blob();
-      },
-    )[0];
+  blob(): Accessor<Blob | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.blob();
+    });
   }
 
-  formData(): Resource<FormData | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.formData();
-      },
-    )[0];
+  formData(): Accessor<FormData | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.formData();
+    });
   }
 
-  json<T>(): Resource<T> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.json();
-      },
-    )[0];
+  json<T>(): Accessor<T> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.json();
+    });
   }
 
-  text(): Resource<string | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.text();
-      },
-    )[0];
+  text(): Accessor<string | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.text();
+    });
   }
 }
 
@@ -104,7 +95,7 @@ export interface FetchFailure {
 export type FetchResult<T> = FetchPending<T> | FetchSuccess<T> | FetchFailure;
 
 class InternalFetchResult<T> {
-  private source: () => FetchResult<T>;
+  private readonly source: () => FetchResult<T>;
 
   constructor(source: () => FetchResult<T>) {
     this.source = source;
@@ -120,11 +111,16 @@ class InternalFetchResult<T> {
 }
 
 function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
-  const [value, setValue] = createSignal<FetchResult<T>>({
-    status: 'pending',
-  });
+  // `ownedWrite` because the state is advanced from the effect below and from
+  // the promise callbacks it starts, both of which run in an owned scope.
+  const [value, setValue] = createSignal<FetchResult<T>>(
+    {
+      status: 'pending',
+    },
+    { ownedWrite: true },
+  );
 
-  createEffect(() => {
+  createTrackedEffect(() => {
     const result = source();
 
     setValue({
@@ -133,13 +129,13 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
     });
 
     result.then(
-      val => {
+      (val) => {
         setValue({
           status: 'success',
           value: val,
         });
       },
-      val => {
+      (val) => {
         setValue({
           status: 'failure',
           value: val,
@@ -152,19 +148,16 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
 }
 
 export class SuspenselessFetchResponse {
-  private input: Signalify<RequestInfo | URL>;
+  private readonly input: Signalify<RequestInfo | URL>;
 
-  private init?: Signalify<RequestInit | undefined>;
+  private readonly init?: Signalify<RequestInit | undefined>;
 
-  constructor(
-    input: Signalify<RequestInfo | URL>,
-    init?: Signalify<RequestInit | undefined>,
-  ) {
+  constructor(input: Signalify<RequestInfo | URL>, init?: Signalify<RequestInit | undefined>) {
     this.input = input;
     this.init = init;
   }
 
-  private async readResponse() {
+  private async readResponse(): Promise<Response> {
     return await nativeFetch(fromSignal(this.input), fromSignal(this.init));
   }
 

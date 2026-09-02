@@ -1,13 +1,16 @@
 import { createMemo } from 'solid-js';
 
-function isAccessor<T>(value: any): value is () => T {
+function isAccessor(value: unknown): value is () => unknown {
   return typeof value === 'function';
 }
 
-export default function string<T>(
-  strings: TemplateStringsArray,
-  ...args: (T | (() => T))[]
-): () => string {
+/**
+ * A tagged template that produces a reactive string.
+ *
+ * Interpolations may be plain values or accessors, and they are stringified
+ * individually, so a single template can mix types freely.
+ */
+export default function string(strings: TemplateStringsArray, ...args: unknown[]): () => string {
   return createMemo(() => {
     let result = '';
     let a = 0;

@@ -58,4 +58,23 @@ A higher-order component that internally wraps a component with a `providerScope
 
 ```js
 import { withProvider } from 'solid-use/provider';
+
+const App = withProvider(props => {
+  provide(MessageProvider, 'Hello Solid');
+  return <Child {...props} />;
+});
 ```
+
+## Scope lifetime
+
+A `provide` call registers the value on the *current* scope and removes it again
+through `onCleanup`, so a value provided under a reactive owner disappears once
+that owner is disposed. `provide` outside of any `providerScope` is a no-op.
+
+Scopes are restored even when a callback throws, so a failed render cannot leak
+a value into the surrounding scope.
+
+## Server-side rendering
+
+The provider tree is plain JavaScript with no reactive state of its own, so it
+behaves identically during SSR and on the client.

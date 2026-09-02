@@ -1,0 +1,17 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "fetch-example": "0.9.1",
+    "provider-example": "0.9.1",
+    "server-value-example": "0.9.1",
+    "spread-example": "0.9.1",
+    "solid-use": "0.9.1"
+  },
+  "changesets": [
+    "calm-ideas-grab",
+    "chilly-candles-travel",
+    "mighty-cycles-fetch",
+    "olive-pans-smile"
+  ]
+}
