@@ -1,13 +1,20 @@
 import { render } from '@solidjs/web';
 import { createSignal } from 'solid-js';
-import {
-  createProvider,
-  inject,
-  provide,
-  withProvider,
-} from 'solid-use/provider';
+import { createProvider, inject, provide, withProvider } from 'solid-use/provider';
 
-const CounterProvider = createProvider(undefined);
+interface Counter {
+  value: () => number;
+  increment: () => void;
+  decrement: () => void;
+}
+
+// The default value is what `inject` returns when no ancestor scope provided
+// one, so it doubles as the "not wired up" behaviour.
+const CounterProvider = createProvider<Counter>({
+  value: () => 0,
+  increment: () => {},
+  decrement: () => {},
+});
 
 function Increment() {
   const { increment } = inject(CounterProvider);
@@ -54,4 +61,4 @@ const App = withProvider(() => {
   );
 });
 
-render(() => <App />, document.getElementById('app'));
+render(() => <App />, document.getElementById('app')!);

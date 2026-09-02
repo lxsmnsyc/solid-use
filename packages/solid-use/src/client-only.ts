@@ -1,32 +1,39 @@
-import { isServer } from '@solidjs/web';
-import type { Component, JSX } from 'solid-js';
+import type { Component, Element } from 'solid-js';
 import {
+  Show,
   createComponent,
   createMemo,
   createSignal,
   createTrackedEffect,
   lazy,
-  Show,
 } from 'solid-js';
 
-export const createClientSignal = isServer
-  ? (): (() => boolean) => () => false
-  : (): (() => boolean) => {
-      const [flag, setFlag] = createSignal(false);
+/**
+ * A signal that is `false` while rendering on the server (and during
+ * hydration) and flips to `true` once the client has rendered.
+ *
+ * `createTrackedEffect` is a no-op on the server but still consumes a
+ * hydration key, which keeps the server and client trees aligned without an
+ * environment-specific implementation.
+ */
+export function createClientSignal(): () => boolean {
+  // `ownedWrite` because the flag is flipped from inside the effect that owns
+  // it, which Solid otherwise rejects as a write in an owned scope.
+  const [flag, setFlag] = createSignal(false, { ownedWrite: true });
 
-      createTrackedEffect(() => {
-        setFlag(true);
-      });
+  createTrackedEffect(() => {
+    setFlag(true);
+  });
 
-      return flag;
-    };
-
-export interface ClientOnlyProps {
-  fallback?: JSX.Element;
-  children?: JSX.Element;
+  return flag;
 }
 
-export const ClientOnly = (props: ClientOnlyProps): JSX.Element => {
+export interface ClientOnlyProps {
+  fallback?: Element;
+  children?: Element;
+}
+
+export const ClientOnly = (props: ClientOnlyProps): Element => {
   const isClient = createClientSignal();
 
   return Show({
@@ -56,9 +63,7 @@ export function clientComponent<T extends Component<any>>(Comp: T): T {
   }) as unknown as T;
 }
 
-export function clientOnly<T extends Component<any>>(
-  fn: () => Promise<{ default: T }>,
-): T {
+export function clientOnly<T extends Component<any>>(fn: () => Promise<{ default: T }>): T {
   const Lazy = lazy(fn);
   return clientComponent(Lazy);
 }
