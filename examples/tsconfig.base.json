@@ -10,6 +10,11 @@
     "noEmit": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    // Type-check against the library source, so linting and type-checking work before a build.
+    // Vite still bundles the built package.
+    "paths": {
+      "solid-use/*": ["../packages/solid-use/src/*.ts"]
+    }
   }
 }
