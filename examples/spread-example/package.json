@@ -1,19 +1,21 @@
 {
   "name": "spread-example",
-  "type": "module",
   "version": "0.9.1",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^6.2.1",
-    "vite-plugin-solid": "^2.11.6"
+    "dev": "vite",
+    "serve": "vite preview",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "solid-js": "^1.8.11",
-    "solid-use": "0.9.1"
+    "solid-js": "^1.9.15",
+    "solid-use": "workspace:*"
   },
-  "private": true
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vite-plugin-solid": "^2.11.14"
+  }
 }

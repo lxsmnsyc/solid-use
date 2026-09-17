@@ -22,7 +22,7 @@ export const useMediaQuery = isServer
       const [state, setState] = createSignal(false);
 
       createEffect(() => {
-        const callback = () => {
+        const callback = (): void => {
           setState(media.matches);
         };
         callback();

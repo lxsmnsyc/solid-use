@@ -1,57 +1,66 @@
-# Contributing to solid-headless
+# Contributing to solid-use
 
 Please read the [Code of Conduct](/CODE_OF_CONDUCT.md) first.
 
-## Developing
+## Setup
 
-The development branch is `main` and this is the branch that all pull requests should be made against.
+Pull requests go against `main`.
 
-To develop locally:
+1. Fork the repository and clone it.
+2. Create a branch.
 
-1. Fork this repository to your own Github account and then clone it to your local device.
-2. Create a new branch:
+   ```bash
+   git checkout -b MY_BRANCH_NAME
+   ```
 
-```bash
-git checkout -b MY_BRANCH_NAME
-```
+3. Enable pnpm through Corepack. The version comes from `packageManager` in `package.json`.
 
-3. Install yarn:
+   ```bash
+   corepack enable
+   ```
 
-```bash
-npm install -g yarn
-```
+4. Install dependencies.
 
-4. Install dependencies with:
+   ```bash
+   pnpm install
+   ```
 
-```bash
-yarn
-```
+## Commands
 
-5. Link dependencies with
+Run these from the repository root.
 
-```bash
-yarn bootstrap
-```
+- `pnpm build` builds the package and the examples.
+- `pnpm type-check` type-checks everything with TypeScript 7.
+- `pnpm lint` runs [oxlint](https://oxc.rs/docs/guide/usage/linter). `pnpm lint:fix` applies fixes.
+- `pnpm fmt` formats with [oxfmt](https://oxc.rs/docs/guide/usage/formatter). `pnpm fmt:check` only checks.
 
-### Developing packages
+## The package
 
-To develop a package, open your terminal on `packages/PACKAGE_NAME`.
+The library lives in `packages/solid-use`. Each file in `src` is published as its own entry, such as `solid-use/atom`.
 
-- Use `yarn build` to build the source of the package.
-- Use `yarn clean` to clean the build directory.
-- Use `yarn type-check` to perform type-checking.
-- Use `yarn lint` to perform linting.
+- `pnpm build` runs [tsdown](https://tsdown.dev/) and writes ESM, CJS, and type declarations to `dist`.
+- `pnpm watch` rebuilds on change.
 
-You can also use the same commands on the project root.
+To add an entry, add the file to `entry` in `tsdown.config.ts`. The build updates `exports` in `package.json`. Add the entry to `typesVersions` by hand.
 
-### Developing examples
+## Examples
 
-Examples are made through [Vite](https://vitejs.dev/guide/). Examples should be marked as private packages (through `"private": true` in package.json) to keep them from being published. When using local packages as dependencies, make sure to use the exact version in the `"dependencies`" of the examples.
+Examples live in `examples`. They are private packages and depend on the library through `workspace:*`.
 
-### Repository Management
+## Releases
 
-The development of this project heavily relies on the use of [Classic Yarn (1.x)](https://classic.yarnpkg.com/lang/en/) for managing packages and [Lerna](https://lerna.js.org/) for managing the workspace.
+Releases use [changesets](https://github.com/changesets/changesets).
 
-### Styling
+1. Add a changeset for any change that affects the published package.
 
-TODO
+   ```bash
+   pnpm cs:add
+   ```
+
+2. Merge the pull request into `main`.
+3. The release workflow opens a "Version Packages" pull request.
+4. Merging that pull request publishes to npm and creates the GitHub release.
+
+## Style
+
+Formatting is decided by `pnpm fmt`. Lint rules come from [`@lxsmnsyc/oxlint-config`](https://www.npmjs.com/package/@lxsmnsyc/oxlint-config). Each exception in `oxlint.config.ts` has a comment explaining it.

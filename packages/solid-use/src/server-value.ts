@@ -12,11 +12,7 @@ const useServerValue = isServer
       const ctx = sharedConfig.context;
       const value = cb();
       if (ctx) {
-        (ctx as ServerHydrationContext).serialize(
-          `${ctx.id}${ctx.count++}`,
-          value,
-          false,
-        );
+        (ctx as ServerHydrationContext).serialize(`${ctx.id}${ctx.count++}`, value, false);
       }
       return value;
     }

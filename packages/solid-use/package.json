@@ -1,177 +1,127 @@
 {
+  "name": "solid-use",
   "version": "0.9.1",
-  "type": "module",
-  "exports": {
-    "./atom": {
-      "types": "./dist/types/atom.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/atom.cjs",
-        "import": "./dist/esm/development/atom.mjs"
-      },
-      "require": "./dist/cjs/production/atom.cjs",
-      "import": "./dist/esm/production/atom.mjs"
-    },
-    "./props": {
-      "types": "./dist/types/props.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/props.cjs",
-        "import": "./dist/esm/development/props.mjs"
-      },
-      "require": "./dist/cjs/production/props.cjs",
-      "import": "./dist/esm/production/props.mjs"
-    },
-    "./provider": {
-      "types": "./dist/types/provider.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/provider.cjs",
-        "import": "./dist/esm/development/provider.mjs"
-      },
-      "require": "./dist/cjs/production/provider.cjs",
-      "import": "./dist/esm/production/provider.mjs"
-    },
-    "./string": {
-      "types": "./dist/types/string.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/string.cjs",
-        "import": "./dist/esm/development/string.mjs"
-      },
-      "require": "./dist/cjs/production/string.cjs",
-      "import": "./dist/esm/production/string.mjs"
-    },
-    "./media-query": {
-      "types": "./dist/types/media-query.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/media-query.cjs",
-        "import": "./dist/esm/development/media-query.mjs"
-      },
-      "require": "./dist/cjs/production/media-query.cjs",
-      "import": "./dist/esm/production/media-query.mjs"
-    },
-    "./online-status": {
-      "types": "./dist/types/online-status.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/online-status.cjs",
-        "import": "./dist/esm/development/online-status.mjs"
-      },
-      "require": "./dist/cjs/production/online-status.cjs",
-      "import": "./dist/esm/production/online-status.mjs"
-    },
-    "./page-visibility": {
-      "types": "./dist/types/page-visibility.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/page-visibility.cjs",
-        "import": "./dist/esm/development/page-visibility.mjs"
-      },
-      "require": "./dist/cjs/production/page-visibility.cjs",
-      "import": "./dist/esm/production/page-visibility.mjs"
-    },
-    "./fetch": {
-      "types": "./dist/types/fetch.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/fetch.cjs",
-        "import": "./dist/esm/development/fetch.mjs"
-      },
-      "require": "./dist/cjs/production/fetch.cjs",
-      "import": "./dist/esm/production/fetch.mjs"
-    },
-    "./server-value": {
-      "types": "./dist/types/server-value.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/server-value.cjs",
-        "import": "./dist/esm/development/server-value.mjs"
-      },
-      "require": "./dist/cjs/production/server-value.cjs",
-      "import": "./dist/esm/production/server-value.mjs"
-    },
-    "./client-only": {
-      "types": "./dist/types/client-only.d.ts",
-      "development": {
-        "require": "./dist/cjs/development/client-only.cjs",
-        "import": "./dist/esm/development/client-only.mjs"
-      },
-      "require": "./dist/cjs/production/client-only.cjs",
-      "import": "./dist/esm/production/client-only.mjs"
-    }
+  "description": "A collection of SolidJS utilities",
+  "keywords": [
+    "hooks",
+    "primitives",
+    "solid-js",
+    "use"
+  ],
+  "homepage": "https://github.com/lxsmnsyc/solid-use/tree/main/packages/solid-use",
+  "bugs": {
+    "url": "https://github.com/lxsmnsyc/solid-use/issues"
+  },
+  "license": "MIT",
+  "author": "Alexis Munsayac",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lxsmnsyc/solid-use.git",
+    "directory": "packages/solid-use"
   },
   "files": [
     "dist",
     "src"
   ],
-  "engines": {
-    "node": ">=10"
+  "type": "module",
+  "sideEffects": false,
+  "typesVersions": {
+    "*": {
+      "atom": [
+        "./dist/atom.d.ts"
+      ],
+      "client-only": [
+        "./dist/client-only.d.ts"
+      ],
+      "fetch": [
+        "./dist/fetch.d.ts"
+      ],
+      "media-query": [
+        "./dist/media-query.d.ts"
+      ],
+      "online-status": [
+        "./dist/online-status.d.ts"
+      ],
+      "page-visibility": [
+        "./dist/page-visibility.d.ts"
+      ],
+      "props": [
+        "./dist/props.d.ts"
+      ],
+      "provider": [
+        "./dist/provider.d.ts"
+      ],
+      "server-value": [
+        "./dist/server-value.d.ts"
+      ],
+      "string": [
+        "./dist/string.d.ts"
+      ]
+    }
   },
-  "license": "MIT",
-  "keywords": [
-    "pridepack",
-    "solid-js",
-    "use",
-    "hooks"
-  ],
-  "name": "solid-use",
-  "devDependencies": {
-    "@types/node": "^22.13.10",
-    "pridepack": "2.6.4",
-    "solid-js": "^1.9.5",
-    "tslib": "^2.8.1",
-    "typescript": "^5.8.2"
-  },
-  "peerDependencies": {
-    "solid-js": "^1.7"
-  },
-  "scripts": {
-    "prepublishOnly": "pridepack clean && pridepack build",
-    "build": "pridepack build",
-    "type-check": "pridepack check",
-    "lint": "pridepack lint",
-    "clean": "pridepack clean",
-    "watch": "pridepack watch"
-  },
-  "description": "A collection of SolidJS utilities",
-  "repository": {
-    "url": "https://github.com/lxsmnsyc/solid-use.git",
-    "type": "git"
-  },
-  "homepage": "https://github.com/lxsmnsyc/solid-use/tree/main/packages/solid-use",
-  "bugs": {
-    "url": "https://github.com/lxsmnsyc/solid-use/issues"
+  "exports": {
+    "./atom": {
+      "import": "./dist/atom.js",
+      "require": "./dist/atom.cjs"
+    },
+    "./client-only": {
+      "import": "./dist/client-only.js",
+      "require": "./dist/client-only.cjs"
+    },
+    "./fetch": {
+      "import": "./dist/fetch.js",
+      "require": "./dist/fetch.cjs"
+    },
+    "./media-query": {
+      "import": "./dist/media-query.js",
+      "require": "./dist/media-query.cjs"
+    },
+    "./online-status": {
+      "import": "./dist/online-status.js",
+      "require": "./dist/online-status.cjs"
+    },
+    "./page-visibility": {
+      "import": "./dist/page-visibility.js",
+      "require": "./dist/page-visibility.cjs"
+    },
+    "./props": {
+      "import": "./dist/props.js",
+      "require": "./dist/props.cjs"
+    },
+    "./provider": {
+      "import": "./dist/provider.js",
+      "require": "./dist/provider.cjs"
+    },
+    "./server-value": {
+      "import": "./dist/server-value.js",
+      "require": "./dist/server-value.cjs"
+    },
+    "./string": {
+      "import": "./dist/string.js",
+      "require": "./dist/string.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
   },
-  "author": "Alexis Munsayac",
-  "private": false,
-  "typesVersions": {
-    "*": {
-      "atom": [
-        "./dist/types/atom.d.ts"
-      ],
-      "props": [
-        "./dist/types/props.d.ts"
-      ],
-      "provider": [
-        "./dist/types/provider.d.ts"
-      ],
-      "string": [
-        "./dist/types/string.d.ts"
-      ],
-      "media-query": [
-        "./dist/types/media-query.d.ts"
-      ],
-      "online-status": [
-        "./dist/types/online-status.d.ts"
-      ],
-      "page-visibility": [
-        "./dist/types/page-visibility.d.ts"
-      ],
-      "fetch": [
-        "./dist/types/fetch.d.ts"
-      ],
-      "server-value": [
-        "./dist/types/server-value.d.ts"
-      ],
-      "client-only": [
-        "./dist/types/client-only.d.ts"
-      ]
-    }
+  "scripts": {
+    "build": "tsdown",
+    "prepublishOnly": "pnpm run build",
+    "type-check": "tsc --noEmit",
+    "watch": "tsdown --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "publint": "^0.3.24",
+    "solid-js": "^1.9.15",
+    "tsdown": "^0.23.0",
+    "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.7"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

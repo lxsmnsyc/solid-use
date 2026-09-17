@@ -19,14 +19,11 @@ function fromSignal<T>(value: Signalify<T>): T {
 type FetchParameters = [RequestInfo | URL, RequestInit | undefined];
 
 export class SuspensefulFetchResponse {
-  private input: Signalify<RequestInfo | URL>;
+  private readonly input: Signalify<RequestInfo | URL>;
 
-  private init?: Signalify<RequestInit | undefined>;
+  private readonly init?: Signalify<RequestInit | undefined>;
 
-  constructor(
-    input: Signalify<RequestInfo | URL>,
-    init?: Signalify<RequestInit | undefined>,
-  ) {
+  constructor(input: Signalify<RequestInfo | URL>, init?: Signalify<RequestInit | undefined>) {
     this.input = input;
     this.init = init;
   }
@@ -104,7 +101,7 @@ export interface FetchFailure {
 export type FetchResult<T> = FetchPending<T> | FetchSuccess<T> | FetchFailure;
 
 class InternalFetchResult<T> {
-  private source: () => FetchResult<T>;
+  private readonly source: () => FetchResult<T>;
 
   constructor(source: () => FetchResult<T>) {
     this.source = source;
@@ -133,13 +130,13 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
     });
 
     result.then(
-      val => {
+      (val) => {
         setValue({
           status: 'success',
           value: val,
         });
       },
-      val => {
+      (val) => {
         setValue({
           status: 'failure',
           value: val,
@@ -152,19 +149,16 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
 }
 
 export class SuspenselessFetchResponse {
-  private input: Signalify<RequestInfo | URL>;
+  private readonly input: Signalify<RequestInfo | URL>;
 
-  private init?: Signalify<RequestInit | undefined>;
+  private readonly init?: Signalify<RequestInit | undefined>;
 
-  constructor(
-    input: Signalify<RequestInfo | URL>,
-    init?: Signalify<RequestInit | undefined>,
-  ) {
+  constructor(input: Signalify<RequestInfo | URL>, init?: Signalify<RequestInit | undefined>) {
     this.input = input;
     this.init = init;
   }
 
-  private async readResponse() {
+  private async readResponse(): Promise<Response> {
     return await nativeFetch(fromSignal(this.input), fromSignal(this.init));
   }
 

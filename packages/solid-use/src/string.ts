@@ -1,13 +1,11 @@
 import { createMemo } from 'solid-js';
 
-function isAccessor<T>(value: any): value is () => T {
+function isAccessor(value: unknown): value is () => unknown {
   return typeof value === 'function';
 }
 
-export default function string<T>(
-  strings: TemplateStringsArray,
-  ...args: (T | (() => T))[]
-): () => string {
+// Each interpolation is stringified on its own, so one template can mix types.
+export default function string(strings: TemplateStringsArray, ...args: unknown[]): () => string {
   return createMemo(() => {
     let result = '';
     let a = 0;

@@ -7,7 +7,7 @@ const useOnlineStatus = isServer
       const [state, setState] = createSignal(true);
 
       createEffect(() => {
-        const callback = () => {
+        const callback = (): void => {
           setState(navigator.onLine);
         };
         callback();

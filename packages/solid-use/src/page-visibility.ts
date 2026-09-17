@@ -7,7 +7,7 @@ const usePageVisibility = isServer
       const [state, setState] = createSignal(true);
 
       createEffect(() => {
-        const callback = () => {
+        const callback = (): void => {
           setState(document.visibilityState === 'visible');
         };
         callback();

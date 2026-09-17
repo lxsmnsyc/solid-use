@@ -50,28 +50,35 @@ export function pickProps<T extends Record<string, any>, K extends keyof T>(
 
 type ReactiveObject = Record<string | symbol, any> | any[];
 
+// `Readonly<() => T>` would drop the call signature and make `props.field()` a type error.
 export type Spread<T extends ReactiveObject> = {
-  [key in keyof T]: Readonly<() => T[key]>;
+  [key in keyof T]: () => T[key];
 };
 
-export type KeyType<T extends ReactiveObject> = T extends any[]
-  ? number
-  : keyof T;
+export type KeyType<T extends ReactiveObject> = T extends any[] ? number : keyof T;
 
 export function destructure<T extends ReactiveObject>(source: T): Spread<T> {
-  const proxy = new Proxy((Array.isArray(source) ? [] : {}) as Spread<T>, {
-    get(target, key) {
-      const ref = Reflect.get(target, key);
+  const isArray = Array.isArray(source);
+  // Accessors are cached outside the proxy target.
+  // Storing them on an array target would assign a function to `length`, which throws.
+  const refs = new Map<PropertyKey, () => unknown>();
+
+  return new Proxy((isArray ? [] : {}) as Spread<T>, {
+    get(_target, key) {
+      // `length` and symbol keys such as `Symbol.iterator` are read from the source as is.
+      // Without this, array destructuring and iteration break.
+      if (typeof key === 'symbol' || (isArray && key === 'length')) {
+        return source[key as keyof T];
+      }
+      const ref = refs.get(key);
       if (ref) {
         return ref;
       }
       const newRef = createMemo(() => source[key as keyof T]);
-      Reflect.set(target, key, newRef);
+      refs.set(key, newRef);
       return newRef;
     },
   });
-
-  return proxy;
 }
 
 export function spread<T extends ReactiveObject>(source: T): Spread<T> {

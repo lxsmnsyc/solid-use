@@ -1,13 +1,12 @@
-
 # `solid-use/provider`
 
-SolidJS already provides the [Context API](https://www.solidjs.com/docs/latest/api#createcontext) for injecting values down the component tree, however, this may lead into an unwanted pyramid of doom for nested Context.
+A way to pass values down without nesting context providers. Values can also be read inside captured callbacks and outside components.
 
-Provider provides a compositional way to inject values not just the component tree, but also inside captured callbacks. You can also use the Provider API outside components, useful for injecting values inside global side-effects.
+Solid's [Context API](https://docs.solidjs.com/concepts/context) covers most cases. Use this when many nested providers become hard to read.
 
 ## `createProvider`
 
-Creates a unique provider key that also holds a default value. This is similar to `createContext` although with different behaviors.
+Creates a provider key with a default value.
 
 ```ts
 import { createProvider } from 'solid-use/provider';
@@ -17,22 +16,25 @@ const MessageProvider = createProvider('Hello World');
 
 ## `provide` and `inject`
 
-`provide` accepts a Provider instance and a value to be injected. `inject` performs a lookup in the provider scope for the corresponding Provider value. If `inject` cannot find the Provider instance, the default value of the Provider is returned.
+- `provide` sets a value for a provider in the current scope.
+- `inject` looks up the nearest value for a provider. It returns the default value when none is found.
 
 ```ts
-import { provide, inject } from 'solid-use/provider';
+import { inject, provide } from 'solid-use/provider';
 
 provide(MessageProvider, 'Hello Solid');
-//...
-const value = inject(MessageProvider); // Hello Solid
+// ...
+const value = inject(MessageProvider); // 'Hello Solid'
 ```
+
+`provide` does nothing outside a `providerScope`.
 
 ## `providerScope`
 
-Accepts a callback that is executed synchronously. `providerScope` provides an internal context that allows injecting values across boundaries. This is must be used for `provide` and `inject` to work.
+Runs a callback in a new scope. `provide` and `inject` need a scope to work. Scopes nest, and an inner scope can override an outer value.
 
 ```ts
-import { providerScope, provide } from 'solid-use/provider';
+import { provide, providerScope } from 'solid-use/provider';
 
 providerScope(() => {
   provide(XProvider, 'X');
@@ -42,20 +44,33 @@ providerScope(() => {
 
 ## `capturedProvider`
 
-Wraps a callback into a captured callback that holds the current Provider scope. This allows `inject` to perform lookup even outside the synchronous scope.
+Wraps a callback so it keeps the scope that was active when it was wrapped. Use it for code that runs later, such as effects and event handlers.
 
 ```ts
 import { capturedProvider, inject } from 'solid-use/provider';
 
-createEffect(capturedProvider(() => {
-  const value = inject(MessageProvider);
-}));
+createEffect(
+  capturedProvider(() => {
+    const value = inject(MessageProvider);
+  }),
+);
 ```
 
 ## `withProvider`
 
-A higher-order component that internally wraps a component with a `providerScope`.
+Wraps a component in its own `providerScope`.
 
-```js
-import { withProvider } from 'solid-use/provider';
+```tsx
+import { provide, withProvider } from 'solid-use/provider';
+
+const App = withProvider((props) => {
+  provide(MessageProvider, 'Hello Solid');
+  return <Child {...props} />;
+});
 ```
+
+## Lifetime
+
+- A value set with `provide` is removed when the owning reactive scope is cleaned up.
+- A scope is restored even when its callback throws.
+- The provider tree is plain JavaScript, so it behaves the same during SSR.

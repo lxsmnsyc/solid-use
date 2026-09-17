@@ -1,11 +1,17 @@
-
 # `solid-use/client-only`
 
-A set of primitives for enforcing client-only code.
+Primitives for code that must only run in the browser.
+
+| Need                                        | Use                  |
+| ------------------------------------------- | -------------------- |
+| Check whether the client has taken over     | `createClientSignal` |
+| Skip part of the tree during SSR            | `ClientOnly`         |
+| Skip an existing component during SSR       | `clientComponent`    |
+| Skip a component and its module during SSR  | `clientOnly`         |
 
 ## `createClientSignal`
 
-A signal that updates to `true` when component has rendered on the client.
+Returns an accessor that is `false` on the server and during hydration. It becomes `true` once the component has mounted in the browser.
 
 ```js
 import { createClientSignal } from 'solid-use/client-only';
@@ -16,36 +22,39 @@ const isClient = createClientSignal();
 
 ## `ClientOnly`
 
-Render a set of children only on the client.
+Renders its children only in the browser. The server renders `fallback`, or nothing.
 
-```js
+```jsx
 import { ClientOnly } from 'solid-use/client-only';
 
-<ClientOnly fallback={<div>This a server-only element</div>}>
-  <div>This is a client-only element.</div>
-</ClientOnly>
+<ClientOnly fallback={<div>Rendered on the server</div>}>
+  <div>Rendered in the browser</div>
+</ClientOnly>;
+```
+
+## `clientComponent`
+
+Wraps a component so it only renders in the browser. Props are passed through.
+
+```jsx
+import { clientComponent } from 'solid-use/client-only';
+
+const Example = clientComponent(() => <h1>I'm client only!</h1>);
 ```
 
 ## `clientOnly`
 
-Alternative to `lazy`, but instead of loading for both server and client, it only loads on the client.
+Works like `lazy`, but the module is not loaded during SSR.
 
-```js
+```jsx
 import { clientOnly } from 'solid-use/client-only';
 
 const MyLazyComponent = clientOnly(() => import('./path/to/my-lazy-component'));
 
 <Suspense>
   <MyLazyComponent />
-</Suspense>
+</Suspense>;
 ```
 
-## `clientComponent`
-
-A higher-order component utility to indicate that the given component would only render on the eclient-side.
-
-```js
-import { clientComponent } from 'solid-use/client-only';
-
-const Example = clientComponent(() => <h1>I'm client only!</h1>);
-```
+- While hydrating, the component renders after mount.
+- In an app without SSR, it behaves like `lazy`.

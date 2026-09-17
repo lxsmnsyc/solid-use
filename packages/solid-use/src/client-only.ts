@@ -44,9 +44,7 @@ export const ClientOnly = (props: ClientOnlyProps): JSX.Element => {
   });
 };
 
-export function clientOnly<T extends Component<any>>(
-  fn: () => Promise<{ default: T }>,
-): T {
+export function clientOnly<T extends Component<any>>(fn: () => Promise<{ default: T }>): T {
   const Lazy = lazy(fn);
   return ((props: any) => {
     if (sharedConfig.context) {
