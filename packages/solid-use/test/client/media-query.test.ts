@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush } from 'solid-js';
+import { createEffect, createRoot, flush } from 'solid-js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   useMediaQuery,
@@ -107,9 +107,12 @@ describe('useMediaQuery', () => {
       const matches = useMediaQuery(query);
       const seen: boolean[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(matches());
-      });
+      createEffect(
+        () => matches(),
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       media(query).emit(true);

@@ -2,9 +2,7 @@
 
 ## `usePageVisibility`
 
-Tracks whether the document is currently visible. The accessor mirrors
-`document.visibilityState === 'visible'` and updates whenever the
-`visibilitychange` event fires.
+Returns an accessor that is `true` while the page is visible. It updates when the browser fires the `visibilitychange` event.
 
 ```js
 import usePageVisibility from 'solid-use/page-visibility';
@@ -16,7 +14,7 @@ createEffect(() => {
 });
 ```
 
-A common use is pausing work while the user is on another tab:
+A common use is pausing work while the tab is in the background.
 
 ```js
 const isVisible = usePageVisibility();
@@ -30,12 +28,5 @@ createEffect(() => {
 });
 ```
 
-### Server-side rendering
-
-The primitive is isomorphic: the same implementation runs on the server and on
-the client.
-
-- During SSR the accessor resolves to `true`. Effects do not run on the server,
-  so `document` is never touched.
-- On the client the real state is read once effects settle, and the listener is
-  removed automatically when the owner is disposed.
+- During SSR the accessor always returns `true`.
+- In the browser the listener is removed when the owner is cleaned up.

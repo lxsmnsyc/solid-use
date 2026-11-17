@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush, resolve } from 'solid-js';
+import { createEffect, createRoot, flush, resolve } from 'solid-js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import atom from '../../src/atom';
 
@@ -25,9 +25,10 @@ const {
 
 /** Subscribes to `read` so that the reactive source behind it starts running. */
 function track(read: () => unknown): void {
-  createTrackedEffect(() => {
-    read();
-  });
+  createEffect(
+    () => read(),
+    () => {},
+  );
 }
 
 function jsonResponse(body: unknown): Response {

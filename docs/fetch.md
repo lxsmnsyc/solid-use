@@ -1,12 +1,14 @@
 # `solid-use/fetch`
 
-```js
+A reactive wrapper around the Fetch API. The third argument picks between a Suspense-based result and a plain status object.
+
+```jsx
 import fetch from 'solid-use/fetch';
 
 function SuspensefulDogImage() {
   const result = fetch('https://dog.ceo/api/breed/shiba/images/random', undefined, true).json();
 
-  return <img src={result().message} alt={result().message} />;
+  return <img src={result()?.message} alt="A random shiba" />;
 }
 
 function SuspenselessDogImage() {
@@ -21,34 +23,17 @@ function SuspenselessDogImage() {
         <h1>Something went wrong</h1>
       </Match>
       <Match when={result.status === 'success'}>
-        <img src={result.value.message} alt={result.value.message} />
+        <img src={result.value.message} alt="A random shiba" />
       </Match>
     </Switch>
   );
 }
 ```
 
-Provides a similar API to the Fetch API, `solid-use`' `fetch` uses resource and signals to provide a reactive way of fetching.
+## Suspenseful and suspenseless
 
-The parameters of `fetch` can be wrapped into a function for reactive sources and options.
-
-```js
-function SuspensefulDogImage() {
-  const result = fetch(() => `https://dog.ceo/api/breed/${breed()}/images/random`, () => ({ mode: mode() }), true).json();
-
-  return <img src={result().message} alt={result().message} />;
-}
-```
-
-## Suspenseful vs. suspenseless
-
-The third argument picks the shape of the result.
-
-- `true` returns a `SuspensefulFetchResponse`. Its body readers return an
-  accessor backed by an async memo, so reading it inside a `Suspense` boundary
-  suspends until the request settles.
-- `false` (the default) returns a `SuspenselessFetchResponse`. Its body readers
-  return a `FetchResult`, a reactive object you branch on yourself.
+- `true` returns a `SuspensefulFetchResponse`. Each body reader returns an accessor backed by an async memo, so reading it inside `Suspense` waits for the request.
+- `false` or no argument returns a `SuspenselessFetchResponse`. Each body reader returns a `FetchResult` that you check yourself.
 
 ```ts
 type FetchResult<T> =
@@ -57,27 +42,24 @@ type FetchResult<T> =
   | { status: 'failure'; value: any };
 ```
 
-Both classes expose the same body readers as the Fetch API response:
-`arrayBuffer`, `blob`, `formData`, `json` and `text`. Each reader performs its
-own request; call one reader per response.
+Both expose the Fetch API body readers: `arrayBuffer`, `blob`, `formData`, `json`, and `text`.
 
-Nothing is requested until a body reader is called.
+- No request is sent until a body reader is called.
+- Each body reader sends its own request.
 
-## Reactivity
+## Reactive arguments
 
-`input` and `init` may each be a value or an accessor. Accessors are read inside
-the request's reactive scope, so changing one triggers a new request.
+The input and the options can be accessors. A new request is sent when one of them changes.
 
-```js
+```jsx
 const result = fetch(
   () => `https://dog.ceo/api/breed/${breed()}/images/random`,
   () => ({ mode: mode() }),
-  false,
+  true,
 ).json();
 ```
 
-## Server-side rendering
+## SSR
 
-`SuspenselessFetchResponse` drives its state from an effect, and effects do not
-run during SSR, so it stays `pending` on the server. Use the suspenseful form -
-or a server-side loader - if the data has to be part of the rendered HTML.
+- The suspenseful form uses an async memo, so it works with Solid's SSR.
+- The suspenseless form updates from an effect. Effects do not run during SSR, so it stays `pending` on the server.

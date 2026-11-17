@@ -1,4 +1,6 @@
-import { getOwner, sharedConfig } from 'solid-js';
+import { getOwner } from 'solid-js';
+// Solid 2.0 stable moved `sharedConfig` out of the main entry.
+import { sharedConfig } from 'solid-js/internal';
 
 /**
  * The subset of Solid's `sharedConfig` that this primitive relies on.

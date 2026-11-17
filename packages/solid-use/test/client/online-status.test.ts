@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush } from 'solid-js';
+import { createEffect, createRoot, flush } from 'solid-js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import useOnlineStatus from '../../src/online-status';
 
@@ -44,9 +44,12 @@ describe('useOnlineStatus', () => {
       const isOnline = useOnlineStatus();
       const seen: boolean[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(isOnline());
-      });
+      createEffect(
+        () => isOnline(),
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       setOnline(false, 'offline');

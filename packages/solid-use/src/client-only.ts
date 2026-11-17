@@ -1,18 +1,11 @@
 import type { Component, Element } from 'solid-js';
-import {
-  Show,
-  createComponent,
-  createMemo,
-  createSignal,
-  createTrackedEffect,
-  lazy,
-} from 'solid-js';
+import { Show, createComponent, createEffect, createMemo, createSignal, lazy } from 'solid-js';
 
 /**
  * A signal that is `false` while rendering on the server (and during
  * hydration) and flips to `true` once the client has rendered.
  *
- * `createTrackedEffect` is a no-op on the server but still consumes a
+ * `createEffect` is a no-op on the server but still consumes a
  * hydration key, which keeps the server and client trees aligned without an
  * environment-specific implementation.
  */
@@ -21,9 +14,12 @@ export function createClientSignal(): () => boolean {
   // it, which Solid otherwise rejects as a write in an owned scope.
   const [flag, setFlag] = createSignal(false, { ownedWrite: true });
 
-  createTrackedEffect(() => {
-    setFlag(true);
-  });
+  createEffect(
+    () => undefined,
+    () => {
+      setFlag(true);
+    },
+  );
 
   return flag;
 }

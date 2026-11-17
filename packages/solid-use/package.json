@@ -17,13 +17,15 @@
   "author": "Alexis Munsayac",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxsmnsyc/solid-use.git"
+    "url": "git+https://github.com/lxsmnsyc/solid-use.git",
+    "directory": "packages/solid-use"
   },
   "files": [
     "dist",
     "src"
   ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     "./atom": "./dist/atom.js",
     "./client-only": "./dist/client-only.js",
@@ -41,26 +43,26 @@
     "access": "public"
   },
   "scripts": {
-    "prepublishOnly": "tsdown",
     "build": "tsdown",
+    "prepublishOnly": "pnpm run build",
     "watch": "tsdown --watch",
     "test": "vitest run",
     "test:watch": "vitest",
     "type-check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json"
   },
   "devDependencies": {
-    "@solidjs/web": "2.0.0-rc.5",
-    "@types/node": "^22.13.10",
+    "@solidjs/web": "2.0.0",
+    "@types/node": "^26.6.1",
     "jsdom": "^27.4.0",
-    "pridepack": "2.6.4",
-    "solid-js": "2.0.0-rc.5",
-    "tsdown": "^0.21.2",
+    "publint": "^0.3.24",
+    "solid-js": "2.0.0",
+    "tsdown": "^0.23.0",
     "tslib": "^2.8.1",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.11"
   },
   "peerDependencies": {
-    "solid-js": "^2.0.0-rc.5"
+    "solid-js": "^2.0.0"
   },
   "engines": {
     "node": ">=20"

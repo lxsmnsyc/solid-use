@@ -1,71 +1,63 @@
 # `solid-use/props`
 
-Helpers for splitting and reshaping reactive objects - most often a component's
-props - without losing reactivity. Every helper returns getters or accessors
-that read through to the source, so the source is never eagerly unwrapped.
+Helpers for splitting a reactive object, usually a component's props, without losing reactivity.
 
-## `spread` and `destructure`
+## `destructure` and `spread`
 
-Allows splitting a reactive object (ideally, the props) into a field of
-accessors. `spread` is eager while `destructure` is lazy.
+Both turn each field into an accessor.
+
+- `destructure` is lazy. It creates an accessor the first time a field is read.
+- `spread` is eager. It creates an accessor for every field right away.
 
 ```tsx
-import { spread, destructure } from 'solid-use/props';
+import { destructure, spread } from 'solid-use/props';
 
-function MyComponent(props) {
-  // destructure only creates accessors
-  // based on the defined destructured fields
+function Greeting(props) {
+  // Only `greeting` and `target` get accessors.
   const { greeting, target } = destructure(props);
 
-  return <h1>{greeting()}, {target()}!</h1>
+  return <h1>{greeting()}, {target()}!</h1>;
 }
 
-function AnotherComponent(props) {
-  // spread creates accessors for every field in the object
-  return <MyComponent {...spread(props)} />
+function Wrapper(props) {
+  // Every field gets an accessor.
+  return <Greeting {...spread(props)} />;
 }
 
-<AnotherComponent greeting="Hello" target="Solid" />
+<Wrapper greeting="Hello" target="Solid" />;
 ```
 
-`destructure` creates one memo per field, the first time that field is read, and
-reuses it afterwards. `spread` walks `Object.keys` up front, so it reads every
-field immediately - prefer `destructure` when the source has getters that are
-expensive or that you do not want to touch.
+Prefer `destructure` when some getters are expensive or should not be read.
 
-Arrays are supported, both by index and by destructuring:
+An accessor created by `destructure` is reused on later reads of the same field.
+
+Arrays work too, by index or with array destructuring.
 
 ```ts
-const source = destructure([1, 2]);
+const items = destructure([1, 2]);
 
-source[0]();                        // 1
-const [first, second] = source;     // both are accessors
+items[0](); // 1
+const [first, second] = items;
 ```
 
-`length` and the symbol-keyed members of an array source are passed through
-unchanged rather than wrapped in accessors, which is what keeps iteration and
-destructuring working. On a non-array source `length` is an ordinary field and
-does become an accessor.
+`length` and symbol keys of an array are read from the source as is. They do not become accessors.
 
 ## `omitProps` and `pickProps`
 
-Much similar to the built-in `splitProps`, `omitProps` removes selected keys
-while `pickProps` picks the selected keys from the source props.
+These work like Solid's `splitProps`, but return one object.
 
-```js
+- `omitProps` keeps every key except the listed ones.
+- `pickProps` keeps only the listed keys.
+
+```tsx
 import { omitProps } from 'solid-use/props';
 
-<button {...omitProps(props, ['ref', 'onClick'])} />
+<button {...omitProps(props, ['ref', 'onClick'])} />;
 ```
 
-Both return a new object whose remaining keys are defined as enumerable getters
-onto the source, so reading a key inside a reactive scope still tracks it, and
-keys that are never read are never evaluated.
+Kept keys are getters on the source object. Reading a key inside a reactive scope still tracks it.
 
 ## Types
 
-| Type                | Meaning                                                                       |
-| ------------------- | ----------------------------------------------------------------------------- |
-| `ReactiveObject`    | What `destructure` and `spread` accept: any object or array with reactive fields. |
-| `Spread<T>`         | The result of `destructure` and `spread`: `T` with every field replaced by an accessor. |
-| `KeyType<T>`        | A key into a `ReactiveObject`: `number` for arrays, `keyof T` otherwise.        |
+- `Spread<T>` is `T` with every field replaced by an accessor.
+- `KeyType<T>` is `number` for arrays and `keyof T` otherwise.

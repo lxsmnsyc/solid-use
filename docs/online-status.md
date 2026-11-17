@@ -2,9 +2,7 @@
 
 ## `useOnlineStatus`
 
-Tracks whether the browser believes it has a network connection. The accessor
-mirrors `navigator.onLine` and updates whenever the `online` or `offline` event
-fires.
+Returns an accessor for `navigator.onLine`. It updates when the browser fires the `online` or `offline` event.
 
 ```js
 import useOnlineStatus from 'solid-use/online-status';
@@ -16,21 +14,6 @@ createEffect(() => {
 });
 ```
 
-### Server-side rendering
-
-The primitive is isomorphic: the same implementation runs on the server and on
-the client.
-
-- During SSR the accessor resolves to `true`. Effects do not run on the server,
-  so `navigator` and `window` are never touched.
-- On the client the real status is read once effects settle, and the listeners
-  are removed automatically when the owner is disposed.
-
-Because the value only changes after hydration, the server and client markup
-always agree on the initial render.
-
-### Caveats
-
-`navigator.onLine` only reports whether the device has *a* network interface
-attached. It cannot tell you whether the network actually reaches your server,
-so treat it as a hint rather than a guarantee.
+- During SSR the accessor always returns `true`.
+- In the browser the listeners are removed when the owner is cleaned up.
+- `navigator.onLine` only says whether a network connection exists. It does not prove your server is reachable.

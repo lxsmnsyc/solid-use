@@ -3,7 +3,7 @@ import { defineConfig } from 'oxlint';
 
 export default defineConfig({
   extends: [config],
-  ignorePatterns: ['**/dist/**', '**/node_modules/**', '**/.nx/**'],
+  ignorePatterns: ['**/dist/**', '**/node_modules/**', '**/.output/**', '**/.nx/**'],
   rules: {
     // Solid components are plain functions with capitalised names, and calling
     // one directly (`Show({ ... })`, `Comp(props)`) is how a library composes

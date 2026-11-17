@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush } from 'solid-js';
+import { createEffect, createRoot, flush } from 'solid-js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import usePageVisibility from '../../src/page-visibility';
 
@@ -44,9 +44,12 @@ describe('usePageVisibility', () => {
       const isVisible = usePageVisibility();
       const seen: boolean[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(isVisible());
-      });
+      createEffect(
+        () => isVisible(),
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       setVisibility('hidden');

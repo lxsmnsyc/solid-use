@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush } from 'solid-js';
+import { createEffect, createRoot, flush } from 'solid-js';
 import { describe, expect, it, vi } from 'vitest';
 import atom from '../../src/atom';
 
@@ -18,9 +18,12 @@ describe('atom', () => {
       const value = atom(0);
       const seen: number[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(value());
-      });
+      createEffect(
+        () => value(),
+        (next) => {
+          seen.push(next);
+        },
+      );
       flush();
 
       value(1);
@@ -38,9 +41,12 @@ describe('atom', () => {
       const value = atom(0);
       const spy = vi.fn();
 
-      createTrackedEffect(() => {
-        spy(value());
-      });
+      createEffect(
+        () => value(),
+        (next) => {
+          spy(next);
+        },
+      );
       flush();
 
       value(0);
@@ -56,9 +62,12 @@ describe('atom', () => {
       const value = atom({ id: 1 }, (a, b) => a.id === b.id);
       const spy = vi.fn();
 
-      createTrackedEffect(() => {
-        spy(value());
-      });
+      createEffect(
+        () => value(),
+        (next) => {
+          spy(next);
+        },
+      );
       flush();
 
       // Different reference, same identity: no notification.
@@ -94,9 +103,12 @@ describe('atom', () => {
       const value = atom<() => string>(first);
       const seen: (() => string)[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(value());
-      });
+      createEffect(
+        () => value(),
+        (next) => {
+          seen.push(next);
+        },
+      );
       flush();
 
       value(second);
@@ -113,9 +125,12 @@ describe('atom', () => {
 
     createRoot((dispose) => {
       value = atom(0);
-      createTrackedEffect(() => {
-        spy(value());
-      });
+      createEffect(
+        () => value(),
+        (next) => {
+          spy(next);
+        },
+      );
       flush();
       dispose();
     });

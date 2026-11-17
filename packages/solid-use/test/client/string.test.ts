@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush } from 'solid-js';
+import { createEffect, createRoot, flush } from 'solid-js';
 import { describe, expect, it } from 'vitest';
 import atom from '../../src/atom';
 import string from '../../src/string';
@@ -29,9 +29,12 @@ describe('string', () => {
       const message = string`Hello, ${target}!`;
       const seen: string[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(message());
-      });
+      createEffect(
+        () => message(),
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       target('World');

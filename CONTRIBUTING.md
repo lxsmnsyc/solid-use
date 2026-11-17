@@ -2,62 +2,69 @@
 
 Please read the [Code of Conduct](/CODE_OF_CONDUCT.md) first.
 
-## Developing
+## Setup
 
-The development branch is `main` and this is the branch that all pull requests should be made against.
+Pull requests go against `main`, which is the Solid 2 line. The Solid 1 code is on the `solid-1` branch.
 
-To develop locally:
+1. Fork the repository and clone it.
+2. Create a branch.
 
-1. Fork this repository to your own Github account and then clone it to your local device.
-2. Create a new branch:
+   ```bash
+   git checkout -b MY_BRANCH_NAME
+   ```
 
-```bash
-git checkout -b MY_BRANCH_NAME
-```
+3. Enable pnpm through Corepack. The version comes from `packageManager` in `package.json`.
 
-3. Install [pnpm](https://pnpm.io/):
+   ```bash
+   corepack enable
+   ```
 
-```bash
-npm install -g pnpm
-```
+4. Install dependencies.
 
-4. Install dependencies with:
+   ```bash
+   pnpm install
+   ```
 
-```bash
-pnpm install
-```
+## Commands
 
-### Repository commands
+Run these from the repository root.
 
-Run these from the project root; each one fans out across the workspace.
-
-- `pnpm build` builds every package.
+- `pnpm build` builds the package and the examples.
 - `pnpm test` runs the test suites.
-- `pnpm type-check` type-checks every package and example.
-- `pnpm lint` runs [oxlint](https://oxc.rs/docs/guide/usage/linter) with type-aware rules; `pnpm lint:fix` applies its fixes.
-- `pnpm fmt` formats with [oxfmt](https://oxc.rs/docs/guide/usage/formatter); `pnpm fmt:check` verifies formatting without writing.
+- `pnpm type-check` type-checks everything with TypeScript 7.
+- `pnpm lint` runs [oxlint](https://oxc.rs/docs/guide/usage/linter). `pnpm lint:fix` applies fixes.
+- `pnpm fmt` formats with [oxfmt](https://oxc.rs/docs/guide/usage/formatter). `pnpm fmt:check` only checks.
 
-The same commands run in CI, so a green `pnpm build && pnpm fmt:check && pnpm lint && pnpm type-check && pnpm test` locally means a green pipeline.
+## The package
 
-### Developing packages
+The library lives in `packages/solid-use`. Each file in `src` is published as its own entry, such as `solid-use/atom`.
 
-To work on a single package, run the commands from its directory (for example `packages/solid-use`):
-
-- `pnpm build` builds the package with [tsdown](https://tsdown.dev/).
+- `pnpm build` runs [tsdown](https://tsdown.dev/) and writes ESM and type declarations to `dist`.
 - `pnpm watch` rebuilds on change.
-- `pnpm test` runs the suite once; `pnpm test:watch` keeps it running.
-- `pnpm type-check` type-checks both the source and the tests.
+- `pnpm test` runs the suite once. `pnpm test:watch` keeps it running.
 
-Tests run twice, once against Solid's browser build under `jsdom` and once against its server build under Node. Put environment-specific tests in `test/client` or `test/server`, and tests that must behave identically in both in `test/shared`.
+Tests run twice, once against Solid's browser build under `jsdom` and once against its server build under Node. Put environment-specific tests in `test/client` or `test/server`, and tests that must behave the same in both in `test/shared`.
 
-### Developing examples
+To add an entry, add the file to `entry` in `tsdown.config.ts`. The build updates `exports` in `package.json`.
 
-Examples are made through [Vite](https://vitejs.dev/guide/). Examples should be marked as private packages (through `"private": true` in package.json) to keep them from being published. When using local packages as dependencies, use `workspace:*` so the example always builds against the checkout.
+## Examples
 
-### Repository management
+Examples live in `examples`. They are private packages and depend on the library through `workspace:*`.
 
-The workspace is managed with [pnpm workspaces](https://pnpm.io/workspaces), and releases go through [changesets](https://github.com/changesets/changesets). Add one with `pnpm cs:add` whenever a change affects a published package.
+## Releases
 
-### Styling
+Releases use [changesets](https://github.com/changesets/changesets).
 
-Formatting is not a matter of taste here: run `pnpm fmt` and let oxfmt decide. Lint rules come from [`@lxsmnsyc/oxlint-config`](https://www.npmjs.com/package/@lxsmnsyc/oxlint-config); exceptions live in `oxlint.config.ts` and each one carries a comment explaining why it is there.
+1. Add a changeset for any change that affects the published package.
+
+   ```bash
+   pnpm cs:add
+   ```
+
+2. Merge the pull request into `main`.
+3. The release workflow opens a "Version Packages" pull request.
+4. Merging that pull request publishes to npm and creates the GitHub release.
+
+## Style
+
+Formatting is decided by `pnpm fmt`. Lint rules come from [`@lxsmnsyc/oxlint-config`](https://www.npmjs.com/package/@lxsmnsyc/oxlint-config). Each exception in `oxlint.config.ts` has a comment explaining it.

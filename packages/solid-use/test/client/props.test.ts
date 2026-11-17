@@ -1,4 +1,4 @@
-import { createRoot, createTrackedEffect, flush } from 'solid-js';
+import { createEffect, createRoot, flush } from 'solid-js';
 import { describe, expect, it } from 'vitest';
 import atom from '../../src/atom';
 import { destructure, omitProps, pickProps, spread } from '../../src/props';
@@ -26,9 +26,12 @@ describe('omitProps', () => {
       const result = omitProps(props, ['b']);
       const seen: number[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(result.a);
-      });
+      createEffect(
+        () => result.a,
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       write.a(10);
@@ -47,9 +50,12 @@ describe('pickProps', () => {
       const result = pickProps(props, ['a']);
       const seen: number[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(result.a);
-      });
+      createEffect(
+        () => result.a,
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       write.a(10);
@@ -81,9 +87,12 @@ describe('destructure', () => {
       const { a } = destructure(props);
       const seen: number[] = [];
 
-      createTrackedEffect(() => {
-        seen.push(a());
-      });
+      createEffect(
+        () => a(),
+        (value) => {
+          seen.push(value);
+        },
+      );
       flush();
 
       write.b(20);

@@ -12,6 +12,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "paths": {
+      "solid-use/*": ["../packages/solid-use/src/*.ts"]
+    }
   }
 }

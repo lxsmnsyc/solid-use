@@ -1,23 +1,24 @@
 {
-  "exclude": ["node_modules"],
-  "include": ["src", "types"],
   "compilerOptions": {
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "importHelpers": true,
     "declaration": true,
-    "sourceMap": true,
-    "rootDir": "./src",
-    "strict": true,
+    "declarationMap": true,
+    "isolatedModules": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "moduleResolution": "Bundler",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "Bundler",
-    "jsx": "react",
-    "esModuleInterop": true,
-    "target": "ES2017",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2022",
+    "types": [],
     "useDefineForClassFields": false,
-    "declarationMap": true
-  }
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src", "tsdown.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

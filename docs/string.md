@@ -1,7 +1,6 @@
 # `solid-use/string`
 
-`string` is a tagged template for reactive string templates. It returns an
-accessor function that returns the latest computed string.
+`string` is a tagged template that returns an accessor for the computed string. The string updates when an interpolated accessor changes.
 
 ```ts
 import { createSignal } from 'solid-js';
@@ -19,18 +18,17 @@ createEffect(() => {
 setGreeting('Bonjour'); // Bonjour, Solid!
 ```
 
-Interpolations may be accessors or plain values, and the two can be mixed in one
-template. Every interpolation is stringified with `String(...)`, so any type is
-accepted.
+## Interpolations
+
+- An interpolation can be an accessor or a plain value.
+- Accessors and plain values can be mixed in one template.
+- Every interpolation is converted with `String(...)`, so any type is accepted.
+- Any function is called as an accessor. To show a function as text, wrap it: `` string`${() => String(fn)}` ``.
 
 ```ts
-const count = createSignal(2);
+const [count] = createSignal(2);
 
-string`${'You have'} ${count[0]} ${'messages'}`;
+const label = string`You have ${count} new ${'messages'}`;
 ```
 
-The result is backed by a memo, so the template is only recomputed when one of
-the accessors it reads actually changes.
-
-Only functions are treated as accessors. To interpolate a function *as a value*,
-wrap it: `` string`${() => String(fn)}` ``.
+The result is backed by a memo, so the string is only rebuilt when an accessor it reads changes.

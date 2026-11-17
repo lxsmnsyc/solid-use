@@ -1,4 +1,4 @@
-import { type Accessor, createMemo, createSignal, createTrackedEffect } from 'solid-js';
+import { type Accessor, createEffect, createMemo, createSignal } from 'solid-js';
 
 const nativeFetch = globalThis.fetch;
 
@@ -120,29 +120,31 @@ function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
     { ownedWrite: true },
   );
 
-  createTrackedEffect(() => {
-    const result = source();
+  // The promise is boxed so Solid does not await it as an async compute.
+  createEffect(
+    () => ({ promise: source() }),
+    ({ promise: result }) => {
+      setValue({
+        status: 'pending',
+        value: result,
+      });
 
-    setValue({
-      status: 'pending',
-      value: result,
-    });
-
-    result.then(
-      (val) => {
-        setValue({
-          status: 'success',
-          value: val,
-        });
-      },
-      (val) => {
-        setValue({
-          status: 'failure',
-          value: val,
-        });
-      },
-    );
-  });
+      result.then(
+        (val) => {
+          setValue({
+            status: 'success',
+            value: val,
+          });
+        },
+        (val) => {
+          setValue({
+            status: 'failure',
+            value: val,
+          });
+        },
+      );
+    },
+  );
 
   return new InternalFetchResult(value);
 }
