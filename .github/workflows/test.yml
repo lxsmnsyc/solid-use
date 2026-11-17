@@ -5,18 +5,28 @@ on:
   push:
     branches:
       - main
+    # Roadmaps, debates, proposals and decisions are not build inputs.
+    paths-ignore:
+      - 'docs/**'
   pull_request:
+    # A draft runs nothing. Pull requests stay drafts until their review is clean,
+    # so CI runs once as the last gate before the merge.
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - 'docs/**'
 
-# A newer push to the same branch or pull request makes the older run useless.
+# A new push to a pull request cancels the run of the push before it.
+# Runs on pushes are never cancelled.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
 
 jobs:
   test:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
