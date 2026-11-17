@@ -1,5 +1,4 @@
-import type { Resource } from 'solid-js';
-import { createEffect, createResource, createSignal } from 'solid-js';
+import { type Accessor, createEffect, createMemo, createSignal } from 'solid-js';
 
 const nativeFetch = globalThis.fetch;
 
@@ -32,54 +31,49 @@ export class SuspensefulFetchResponse {
     return [fromSignal(this.input), fromSignal(this.init)];
   }
 
-  arrayBuffer(): Resource<ArrayBuffer | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.arrayBuffer();
-      },
-    )[0];
+  arrayBuffer(): Accessor<ArrayBuffer | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.arrayBuffer();
+    });
   }
 
-  blob(): Resource<Blob | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.blob();
-      },
-    )[0];
+  blob(): Accessor<Blob | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.blob();
+    });
   }
 
-  formData(): Resource<FormData | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.formData();
-      },
-    )[0];
+  formData(): Accessor<FormData | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.formData();
+    });
   }
 
-  json<T>(): Resource<T> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.json();
-      },
-    )[0];
+  json<T>(): Accessor<T> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.json();
+    });
   }
 
-  text(): Resource<string | undefined> {
-    return createResource(
-      () => this.readResponse(),
-      async ([localInput, localInit]) => {
-        const response = await nativeFetch(localInput, localInit);
-        return response.text();
-      },
-    )[0];
+  text(): Accessor<string | undefined> {
+    return createMemo(async () => {
+      const [input, init] = this.readResponse();
+
+      const response = await nativeFetch(input, init);
+      return response.text();
+    });
   }
 }
 
@@ -117,33 +111,40 @@ class InternalFetchResult<T> {
 }
 
 function useAsync<T>(source: () => Promise<T>): FetchResult<T> {
-  const [value, setValue] = createSignal<FetchResult<T>>({
-    status: 'pending',
-  });
-
-  createEffect(() => {
-    const result = source();
-
-    setValue({
+  // `ownedWrite` because the state is advanced from the effect below and from
+  // the promise callbacks it starts, both of which run in an owned scope.
+  const [value, setValue] = createSignal<FetchResult<T>>(
+    {
       status: 'pending',
-      value: result,
-    });
+    },
+    { ownedWrite: true },
+  );
 
-    result.then(
-      (val) => {
-        setValue({
-          status: 'success',
-          value: val,
-        });
-      },
-      (val) => {
-        setValue({
-          status: 'failure',
-          value: val,
-        });
-      },
-    );
-  });
+  // The promise is boxed so Solid does not await it as an async compute.
+  createEffect(
+    () => ({ promise: source() }),
+    ({ promise: result }) => {
+      setValue({
+        status: 'pending',
+        value: result,
+      });
+
+      result.then(
+        (val) => {
+          setValue({
+            status: 'success',
+            value: val,
+          });
+        },
+        (val) => {
+          setValue({
+            status: 'failure',
+            value: val,
+          });
+        },
+      );
+    },
+  );
 
   return new InternalFetchResult(value);
 }

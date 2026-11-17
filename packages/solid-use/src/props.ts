@@ -48,25 +48,42 @@ export function pickProps<T extends Record<string, any>, K extends keyof T>(
   return newObject as Pick<T, K>;
 }
 
-type ReactiveObject = Record<string | symbol, any> | any[];
+/**
+ * What `destructure` and `spread` accept: any object or array whose fields may
+ * be reactive. Exported because it is the constraint on their type parameters.
+ */
+export type ReactiveObject = Record<string | symbol, any> | any[];
 
-// `Readonly<() => T>` would drop the call signature and make `props.field()` a type error.
+/**
+ * The result of `destructure` or `spread`: the same shape as the source, with
+ * every field replaced by an accessor for it.
+ */
+// Each field is exposed as an accessor. `Readonly<() => T>` would strip the
+// call signature, which makes the documented `props.field()` usage fail to
+// type-check, so the accessor type is used directly.
 export type Spread<T extends ReactiveObject> = {
   [key in keyof T]: () => T[key];
 };
 
+/**
+ * The type of a key into a `ReactiveObject`: `number` for arrays, `keyof T`
+ * otherwise. Useful when writing a helper that has to be generic over both.
+ */
 export type KeyType<T extends ReactiveObject> = T extends any[] ? number : keyof T;
 
 export function destructure<T extends ReactiveObject>(source: T): Spread<T> {
   const isArray = Array.isArray(source);
-  // Accessors are cached outside the proxy target.
-  // Storing them on an array target would assign a function to `length`, which throws.
+  // The accessors live outside the proxy target. Writing them onto the target
+  // would mean assigning an accessor to `length` on an array, which throws.
   const refs = new Map<PropertyKey, () => unknown>();
 
   return new Proxy((isArray ? [] : {}) as Spread<T>, {
     get(_target, key) {
-      // `length` and symbol keys such as `Symbol.iterator` are read from the source as is.
-      // Without this, array destructuring and iteration break.
+      // `length` and the symbol-keyed members (`Symbol.iterator` above all)
+      // have to keep their original meaning, otherwise the proxy stops
+      // behaving like an array and destructuring it throws. They are read off
+      // the source directly, so reading them inside a reactive scope still
+      // tracks whatever the source tracks.
       if (typeof key === 'symbol' || (isArray && key === 'length')) {
         return source[key as keyof T];
       }

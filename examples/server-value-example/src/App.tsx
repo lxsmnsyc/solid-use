@@ -4,8 +4,10 @@ import useServerValue from 'solid-use/server-value';
 import './app.css';
 
 export default function App() {
-  // `Date.now()` differs between the server and the browser.
-  // `useServerValue` runs it during SSR and reuses the result during hydration.
+  // `Date.now()` answers differently on the server and in the browser, which is
+  // exactly the kind of value that causes a hydration mismatch. `useServerValue`
+  // runs it once during SSR and replays the result during hydration, so the
+  // number below is identical in the HTML and after the page comes alive.
   const start = useServerValue(() => Date.now());
   const [count, setCount] = createSignal(0);
 
@@ -25,6 +27,10 @@ export default function App() {
       >
         Clicks: {count()}
       </button>
+      <p>
+        Reload the page: the first number is baked into the HTML and survives hydration untouched,
+        while the second one is produced by the browser.
+      </p>
     </main>
   );
 }

@@ -2,17 +2,17 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
-    "jsxImportSource": "solid-js",
+    "jsxImportSource": "@solidjs/web",
     "strict": true,
     "noEmit": true,
     "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "types": ["vite/client"],
-    // Type-check against the library source, so linting and type-checking work before a build.
-    // Vite still bundles the built package.
     "paths": {
       "solid-use/*": ["../packages/solid-use/src/*.ts"]
     }

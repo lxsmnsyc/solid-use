@@ -4,7 +4,12 @@ function isAccessor(value: unknown): value is () => unknown {
   return typeof value === 'function';
 }
 
-// Each interpolation is stringified on its own, so one template can mix types.
+/**
+ * A tagged template that produces a reactive string.
+ *
+ * Interpolations may be plain values or accessors, and they are stringified
+ * individually, so a single template can mix types freely.
+ */
 export default function string(strings: TemplateStringsArray, ...args: unknown[]): () => string {
   return createMemo(() => {
     let result = '';

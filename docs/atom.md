@@ -37,3 +37,7 @@ const handler = atom(() => console.log('a'));
 handler(() => console.log('b'));
 handler()(); // logs 'b'
 ```
+
+## Writes inside owned scopes
+
+An atom is created with Solid's `ownedWrite` option. It can be written from inside a component or an effect without tripping the owned-scope write guard of Solid 2. A write that feeds back into the computation that made it still loops.

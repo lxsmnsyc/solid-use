@@ -16,6 +16,7 @@ const [value, setValue] = createSignal(initialState);
 
 - During SSR the callback runs, and the result is written into the page's hydration data.
 - During hydration the stored result is returned. The callback does not run.
+- Solid 2 gives each owner a hydration id, and the value is stored under it.
 - Both sides find the value by the same hydration key, so calls must happen in the same order on the server and the client.
 
 The callback still runs when there is no stored value. This happens in an app without SSR, or when rendering after hydration has finished.

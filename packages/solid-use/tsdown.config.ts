@@ -13,14 +13,10 @@ export default defineConfig({
     'server-value': 'src/server-value.ts',
     string: 'src/string.ts',
   },
-  // CJS is kept so `require()` users on the 0.x line keep working.
-  format: ['esm', 'cjs'],
-  outputOptions: {
-    // Keeps `require('solid-use/atom').default`, the shape earlier CJS builds had.
-    exports: 'named',
-  },
+  // Solid 2 is ESM-only, so this line ships no CJS build.
+  format: ['esm'],
   platform: 'neutral',
-  target: 'es2018',
+  target: 'es2022',
   dts: true,
   sourcemap: true,
   clean: true,

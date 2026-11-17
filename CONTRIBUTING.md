@@ -4,7 +4,7 @@ Please read the [Code of Conduct](/CODE_OF_CONDUCT.md) first.
 
 ## Setup
 
-Pull requests go against `main`.
+Pull requests go against `main`, which is the Solid 2 line. The Solid 1 code is on the `solid-1` branch.
 
 1. Fork the repository and clone it.
 2. Create a branch.
@@ -30,6 +30,7 @@ Pull requests go against `main`.
 Run these from the repository root.
 
 - `pnpm build` builds the package and the examples.
+- `pnpm test` runs the test suites.
 - `pnpm type-check` type-checks everything with TypeScript 7.
 - `pnpm lint` runs [oxlint](https://oxc.rs/docs/guide/usage/linter). `pnpm lint:fix` applies fixes.
 - `pnpm fmt` formats with [oxfmt](https://oxc.rs/docs/guide/usage/formatter). `pnpm fmt:check` only checks.
@@ -38,10 +39,13 @@ Run these from the repository root.
 
 The library lives in `packages/solid-use`. Each file in `src` is published as its own entry, such as `solid-use/atom`.
 
-- `pnpm build` runs [tsdown](https://tsdown.dev/) and writes ESM, CJS, and type declarations to `dist`.
+- `pnpm build` runs [tsdown](https://tsdown.dev/) and writes ESM and type declarations to `dist`.
 - `pnpm watch` rebuilds on change.
+- `pnpm test` runs the suite once. `pnpm test:watch` keeps it running.
 
-To add an entry, add the file to `entry` in `tsdown.config.ts`. The build updates `exports` in `package.json`. Add the entry to `typesVersions` by hand.
+Tests run twice, once against Solid's browser build under `jsdom` and once against its server build under Node. Put environment-specific tests in `test/client` or `test/server`, and tests that must behave the same in both in `test/shared`.
+
+To add an entry, add the file to `entry` in `tsdown.config.ts`. The build updates `exports` in `package.json`.
 
 ## Examples
 

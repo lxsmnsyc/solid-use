@@ -32,7 +32,7 @@ function SuspenselessDogImage() {
 
 ## Suspenseful and suspenseless
 
-- `true` returns a `SuspensefulFetchResponse`. Each body reader returns a Solid resource, so reading it inside `Suspense` waits for the request.
+- `true` returns a `SuspensefulFetchResponse`. Each body reader returns an accessor backed by an async memo, so reading it inside `Suspense` waits for the request.
 - `false` or no argument returns a `SuspenselessFetchResponse`. Each body reader returns a `FetchResult` that you check yourself.
 
 ```ts
@@ -61,5 +61,5 @@ const result = fetch(
 
 ## SSR
 
-- The suspenseful form uses resources, so it works with Solid's SSR.
+- The suspenseful form uses an async memo, so it works with Solid's SSR.
 - The suspenseless form updates from an effect. Effects do not run during SSR, so it stays `pending` on the server.

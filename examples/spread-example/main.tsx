@@ -1,5 +1,5 @@
+import { render } from '@solidjs/web';
 import { createSignal } from 'solid-js';
-import { render } from 'solid-js/web';
 import { destructure } from 'solid-use/props';
 
 interface CountProps {
@@ -9,7 +9,8 @@ interface CountProps {
 }
 
 function Count(props: CountProps) {
-  // Each field becomes an accessor. `increment()` reads the current callback.
+  // `destructure` hands back one accessor per field, so `value()` reads the
+  // current count and `increment()` reads the current callback.
   const { value, increment, decrement } = destructure(props);
 
   return (
@@ -33,11 +34,11 @@ function App() {
   const [count, setCount] = createSignal(0);
 
   function increment() {
-    setCount(count() + 1);
+    setCount((c) => c + 1);
   }
 
   function decrement() {
-    setCount(count() - 1);
+    setCount((c) => c - 1);
   }
 
   return <CountWrapper value={count()} increment={increment} decrement={decrement} />;

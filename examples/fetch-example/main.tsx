@@ -1,5 +1,5 @@
-import { Show, Suspense } from 'solid-js';
-import { render } from 'solid-js/web';
+import { render } from '@solidjs/web';
+import { Loading } from 'solid-js';
 import fetch from 'solid-use/fetch';
 
 interface DogImage {
@@ -10,16 +10,14 @@ interface DogImage {
 function SuspensefulDogImage() {
   const result = fetch('https://dog.ceo/api/breed/shiba/images/random', {}, true).json<DogImage>();
 
-  return (
-    <Show when={result()}>{(image) => <img src={image().message} alt="A random shiba" />}</Show>
-  );
+  return <img src={result().message} alt="A random shiba" />;
 }
 
 function App() {
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Loading fallback={<h1>Loading...</h1>}>
       <SuspensefulDogImage />
-    </Suspense>
+    </Loading>
   );
 }
 

@@ -18,7 +18,9 @@ yarn add solid-js solid-use
 pnpm add solid-js solid-use
 ```
 
-Requires `solid-js` 1.7 or later. Each utility is imported from its own path, such as `solid-use/atom`.
+Requires `solid-js` 2.0 or later. Each utility is imported from its own path, such as `solid-use/atom`.
+
+Using Solid 1.x? Use the previous major of `solid-use` (0.x) and the [`solid-1`](https://github.com/lxsmnsyc/solid-use/tree/solid-1) branch.
 
 ## Docs
 

@@ -1,6 +1,7 @@
 {
   "name": "solid-use",
-  "version": "0.10.0",
+  "version": "1.0.0-next.3",
+  "private": false,
   "description": "A collection of SolidJS utilities",
   "keywords": [
     "hooks",
@@ -25,81 +26,17 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "typesVersions": {
-    "*": {
-      "atom": [
-        "./dist/atom.d.ts"
-      ],
-      "client-only": [
-        "./dist/client-only.d.ts"
-      ],
-      "fetch": [
-        "./dist/fetch.d.ts"
-      ],
-      "media-query": [
-        "./dist/media-query.d.ts"
-      ],
-      "online-status": [
-        "./dist/online-status.d.ts"
-      ],
-      "page-visibility": [
-        "./dist/page-visibility.d.ts"
-      ],
-      "props": [
-        "./dist/props.d.ts"
-      ],
-      "provider": [
-        "./dist/provider.d.ts"
-      ],
-      "server-value": [
-        "./dist/server-value.d.ts"
-      ],
-      "string": [
-        "./dist/string.d.ts"
-      ]
-    }
-  },
   "exports": {
-    "./atom": {
-      "import": "./dist/atom.js",
-      "require": "./dist/atom.cjs"
-    },
-    "./client-only": {
-      "import": "./dist/client-only.js",
-      "require": "./dist/client-only.cjs"
-    },
-    "./fetch": {
-      "import": "./dist/fetch.js",
-      "require": "./dist/fetch.cjs"
-    },
-    "./media-query": {
-      "import": "./dist/media-query.js",
-      "require": "./dist/media-query.cjs"
-    },
-    "./online-status": {
-      "import": "./dist/online-status.js",
-      "require": "./dist/online-status.cjs"
-    },
-    "./page-visibility": {
-      "import": "./dist/page-visibility.js",
-      "require": "./dist/page-visibility.cjs"
-    },
-    "./props": {
-      "import": "./dist/props.js",
-      "require": "./dist/props.cjs"
-    },
-    "./provider": {
-      "import": "./dist/provider.js",
-      "require": "./dist/provider.cjs"
-    },
-    "./server-value": {
-      "import": "./dist/server-value.js",
-      "require": "./dist/server-value.cjs"
-    },
-    "./string": {
-      "import": "./dist/string.js",
-      "require": "./dist/string.cjs"
-    },
+    "./atom": "./dist/atom.js",
+    "./client-only": "./dist/client-only.js",
+    "./fetch": "./dist/fetch.js",
+    "./media-query": "./dist/media-query.js",
+    "./online-status": "./dist/online-status.js",
+    "./page-visibility": "./dist/page-visibility.js",
+    "./props": "./dist/props.js",
+    "./provider": "./dist/provider.js",
+    "./server-value": "./dist/server-value.js",
+    "./string": "./dist/string.js",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -108,20 +45,26 @@
   "scripts": {
     "build": "tsdown",
     "prepublishOnly": "pnpm run build",
-    "type-check": "tsc --noEmit",
-    "watch": "tsdown --watch"
+    "watch": "tsdown --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json"
   },
   "devDependencies": {
+    "@solidjs/web": "2.0.0",
     "@types/node": "^26.6.1",
+    "jsdom": "^27.4.0",
     "publint": "^0.3.24",
-    "solid-js": "^1.9.15",
+    "solid-js": "2.0.0",
     "tsdown": "^0.23.0",
-    "typescript": "^7.0.2"
+    "tslib": "^2.8.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
-    "solid-js": "^1.7"
+    "solid-js": "^2.0.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

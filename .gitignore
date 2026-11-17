@@ -43,6 +43,11 @@ dist
 node_modules/
 jspm_packages/
 
+# Build output
+dist
+.output
+.nitro
+
 # TypeScript v1 declaration files
 typings/
 
